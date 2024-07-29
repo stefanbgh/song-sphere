@@ -1,0 +1,40 @@
+@import "../../less/abstract/_variables.less";
+
+.faq {
+    .title {
+        margin-bottom: 1rem;
+    }
+
+    &-card {
+        margin: 0 auto 2rem;
+        width: 50%;
+
+        .question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: @secondary_color;
+            cursor: pointer;
+
+            &.active {
+                background: @base_color;
+                color: @primary_color;
+            }
+        }
+
+        p {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+        
+            &.active {
+                padding: 2rem 1rem;
+                max-height: 500px;
+                transition: all .5s ease-in-out;
+                background: @secondary_color;
+                border-bottom: 1px solid @base_color;
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+@import "../../less/abstract/_variables.less";
+
+.artists {
+    height: 72.5vh;
+
+    &-list {
+        .cards {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 2rem;
+
+            .card {
+                .image {
+                    z-index: 5;
+                    position: relative;
+
+                    img {
+                        border-radius: 50%;
+                    }
+
+                    .overlay {
+                        z-index: 10;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: @base_color;
+                        opacity: .25;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: .3s;
+
+                        &:hover {
+                            opacity: .5;
+                        }
+                    }
+                }
+
+
+                p {
+                    text-align: center;
+                    font-style: italic;
+                    padding-top: .5rem;
+                    font-weight: normal;
+                    color: @txt_color;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+@import "../../less/abstract/_variables.less";
+
+.song {
+    &-info {
+        &_top {
+            .icons {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                margin-top: .25rem;
+
+                .icon {
+                    cursor: pointer;
+
+                    &.active {
+                        color: @base_color;
+                    }
+                }
+            }
+        }
+
+        &_bot {
+            .lyrics {
+                width: 225px;
+
+                .verse {
+                    font-style: italic;
+                    color: @base_color;
+                }
+            }
+        }
+    }
+}

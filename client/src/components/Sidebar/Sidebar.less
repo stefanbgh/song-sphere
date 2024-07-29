@@ -1,0 +1,56 @@
+@import "../../less/abstract/_variables.less";
+
+aside {
+    display: flex;
+    padding: 1.5rem 2rem;
+    flex-direction: column;
+    width: 20%;
+    min-height: 100vh;
+    background: @gradient;
+
+    div {
+        margin-bottom: 2rem;
+    }
+
+    ul {
+        margin-bottom: 1rem;
+
+        li {
+            list-style: none;
+            margin-bottom: .5rem;
+            padding: 1rem;
+            border-radius: .25rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            color: @base_color;
+        }
+    }
+
+    .library {
+        margin: 1rem 0 2rem;
+
+        .favorites,
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+    }
+
+    .links {
+        display: flex;
+        gap: .75rem;
+        font-size: .75rem;
+        flex-wrap: wrap;
+
+        a {
+            color: @txt_color;
+
+            &:hover {
+                color: @base_color;
+                transition: .3s;
+            }
+        }
+    }
+}

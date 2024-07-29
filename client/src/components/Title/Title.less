@@ -1,0 +1,19 @@
+@import "../../less/abstract/_variables.less";
+
+.title {
+    text-align: center;
+    padding: 3rem 0 2rem;
+}
+
+.desc {
+    span {
+        color: @base_color;
+        font-style: italic;
+    }
+
+    p {
+        &:nth-last-of-type(2) {
+            margin-bottom: 2rem;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+@import "../../less/abstract/_variables.less";
+
+.navigation {
+    background: @secondary_color;
+
+    nav {       
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem 0;
+        width: 1280px;
+        margin: auto;
+
+
+        ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            
+            li {
+                list-style: none;
+            
+                .page {
+                    color: @txt_color;
+                
+                    &:hover {
+                        border-bottom: 1px solid @base_color;
+                        padding-bottom: .25rem;
+                    }
+                
+                    &.active {
+                        color: @base_color;
+                    }
+                }
+            }
+        }
+    }
+
+}

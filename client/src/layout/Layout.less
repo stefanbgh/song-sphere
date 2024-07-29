@@ -1,0 +1,45 @@
+@import "../less/abstract/_variables.less";
+
+.layout {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    align-items: stretch; 
+
+    &>div {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 2rem 3rem 1rem 1rem;
+            width: 100%;
+    
+            div {
+                ul {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.25rem;
+    
+                    li {
+                        list-style: none;
+
+                        &.register-btn {
+                            padding: .75rem 1.5rem;
+                            border-radius: 20px;
+                            background: @base_color;
+                            color: @primary_color;
+                        }
+                    }
+                }
+            }
+        }
+
+        section {
+            padding: 2rem 3rem 1rem 1rem;
+        }
+    }
+}

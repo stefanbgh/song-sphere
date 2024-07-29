@@ -1,0 +1,63 @@
+@import "../../less/abstract/_variables.less";
+
+.songs {
+    height: 72.5vh;
+
+    &-list {
+        .cards {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 2rem;
+
+            .card {
+                width: 175px;
+                height: 175px;
+                border: 4px solid @secondary_color;
+                transition: .3s;
+                cursor: pointer;
+
+                &:hover {
+                    border-left: 4px solid @base_color;
+
+                    p {
+                        color: @base_color;
+                    }
+
+                    div {
+                        .icon {
+                            animation: shake 0.5s ease-out forwards;
+                        }
+                    }
+                }
+
+                div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: @base_color;
+                    border-bottom: 1px solid @base_color;
+                    height: 65%;
+                }
+
+                p {
+                    height: 35%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: @secondary_color;
+                    color: @txt_color;
+                    font-weight: normal;
+                    font-style: italic;
+                }
+            }
+        }
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}

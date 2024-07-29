@@ -1,0 +1,33 @@
+@import "../../less/abstract/_variables.less";
+
+.my-playlist {
+    height: 72.5vh;
+
+    &_title {
+        margin-bottom: 2rem;
+
+        h2 {
+            margin-bottom: .5rem;
+        }
+
+        p {
+            color: @base_color;
+        }
+    }
+
+    .songs {
+        .song {
+            border-bottom: 1px solid white;
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 1.25rem;
+
+            .time {
+                display: flex;
+                align-items: center;
+                gap: .25rem;
+            }
+        }
+    }
+}

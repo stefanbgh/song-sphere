@@ -1,0 +1,70 @@
+@import "../../less/abstract/_variables.less";
+
+.profile {
+    height: 72.5vh;
+
+    &-title {
+        margin-bottom: 3rem;
+
+        h2 {
+            margin-bottom: .5rem;
+        }
+
+        p {
+            color: @base_color;
+        }
+    }
+
+    .info,
+    .activity,
+    .options {
+        margin-bottom: 2rem;
+
+        &-title {
+            margin-bottom: 1rem; 
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+
+            h3 {
+                
+            }
+        }
+
+        p {
+            font-style: italic;
+            color: @base_color;
+
+            span {
+                font-style: normal;
+                font-weight: bold;
+                color: @txt_color;
+            }
+        }
+
+        // options
+        &-buttons {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+
+            .options {
+                &-btn {
+                    padding: .75rem 1.5rem;
+                    border-radius: 20px;
+                    background: @base_color;
+                    color: @primary_color;
+                    border: none;
+                    outline: none;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .activity {
+        margin-bottom: 3rem;
+    }
+
+}

@@ -1,0 +1,130 @@
+@import "../../less/abstract/_variables.less";
+
+.home {
+    .popular {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+
+            .star {
+                color: @base_color;
+            }
+        }
+
+        &-artists {
+            .cards {
+                display: flex;
+                align-items: flex-end;
+                gap: 2rem;
+    
+                .card {
+                    .image {
+                        z-index: 5;
+                        position: relative;
+    
+                        img {
+                            border-radius: 50%;
+                        }
+    
+                        .overlay {
+                            z-index: 10;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: @base_color;
+                            opacity: .25;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            transition: .3s;
+    
+                            &:hover {
+                                opacity: .5;
+                            }
+                        }
+                    }
+    
+    
+                    p {
+                        text-align: center;
+                        font-style: italic;
+                        padding-top: .5rem;
+                        color: @txt_color;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+
+        &-songs {
+            .cards {
+                display: flex;
+                align-items: flex-end;
+                gap: 2rem;
+
+                .card {
+                    width: 175px;
+                    height: 175px;
+                    border: 4px solid @secondary_color;
+                    transition: .3s;
+                    cursor: pointer;
+    
+                    &:hover {
+                        border-left: 4px solid @base_color;
+    
+                        p {
+                            color: @base_color;
+                        }
+    
+                        div {
+                            .icon {
+                                animation: shake 0.5s ease-out forwards;
+                            }
+                        }
+                    }
+
+                    div {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: @base_color;
+                        border-bottom: 1px solid @base_color;
+                        height: 65%;
+                    }
+    
+                    p {
+                        height: 35%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: @secondary_color;
+                        color: @txt_color;
+                        font-weight: normal;
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+
+        &-playlist {
+            p {
+                font-style: italic;
+
+                span {
+                    color: @base_color;
+                }
+            }
+        }
+    }
+}

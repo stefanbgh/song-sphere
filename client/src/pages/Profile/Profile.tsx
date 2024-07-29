@@ -1,0 +1,59 @@
+import { FC } from "react";
+
+import "./Profile.less";
+
+import { MdInfoOutline, MdInsertChartOutlined } from "react-icons/md";
+import { IoMdOptions } from "react-icons/io";
+
+const Profile: FC = () => {
+	return (
+		<div className="profile">
+			<div className="profile-title">
+				<h2>Profile</h2>
+				<p>
+					Manage your account and personalize your SongSphere
+					experience. View your activity and preferences.
+				</p>
+			</div>
+			<div className="info">
+				<div className="activity-title">
+					<MdInsertChartOutlined size={20} />
+					<h3>Your Information:</h3>
+				</div>
+				<p>
+					First Name: <span>John</span>
+				</p>
+				<p>
+					Last Name: <span>Doe</span>
+				</p>
+				<p>
+					Email: <span>example@gmail.com</span>
+				</p>
+			</div>
+			<div className="activity">
+				<div className="activity-title">
+					<MdInfoOutline size={20} />
+					<h3>Your Activity:</h3>
+				</div>
+				<p>
+					Favorite Songs: <span>0</span>
+				</p>
+				<p>
+					Songs in Playlist: <span>0</span>
+				</p>
+			</div>
+			<div className="options">
+				<div className="options-title">
+					<IoMdOptions size={20} />
+					<h3>Options:</h3>
+				</div>
+				<div className="options-buttons">
+					<button className="options-btn">Edit profile</button>
+					<button className="options-btn">Delete profile</button>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default Profile;
