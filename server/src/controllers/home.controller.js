@@ -19,6 +19,8 @@ const home = async (req, res) => {
 			popular_songs: popularSongs,
 		});
 	} catch (error) {
+		console.log(error);
+
 		return res.status(500).send({
 			err: "Internal server error",
 		});
