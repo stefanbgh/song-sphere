@@ -2,10 +2,10 @@ import { Sequelize } from "sequelize";
 import pg from "pg";
 import dbConfig from "../config/index.js";
 
-const { dialect, host, username, password, database, port } = dbConfig;
+const { host, username, password, database, port } = dbConfig;
 
 const sequelize = new Sequelize({
-	dialect,
+	dialect: "postgres",
 	host,
 	username,
 	password,
