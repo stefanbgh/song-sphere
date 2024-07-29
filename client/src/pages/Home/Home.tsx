@@ -1,4 +1,4 @@
-import { Context, FC, useContext } from "react";
+import { Context, FC, useContext, useEffect } from "react";
 
 import AppRoutes from "../../router/Routes";
 import {
@@ -12,10 +12,20 @@ import "./Home.less";
 import SongContext from "../../context/SongContext";
 import { ISongContext } from "../../ts/interfaces/ISongContext";
 import ProtectedNavLink from "../../hoc/ProtectNavLink";
+import { RootState } from "../../ts/types/RootState";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useGetDataQuery } from "../../features/api/home.api";
 
 const Home: FC = (): JSX.Element => {
+	useGetDataQuery();
+	const { home } = useAppSelector((state: RootState) => state.home);
+
 	const usr_id = localStorage.getItem("usr_id");
 	const { setIsActive } = useContext(SongContext as Context<ISongContext>);
+
+	useEffect(() => {
+		console.log(home);
+	}, [home]);
 
 	const handlePlay = () => {
 		if (!usr_id) {
