@@ -3,16 +3,16 @@ import User from "../models/User.js";
 import sb from "../supabase/index.js";
 
 const register = async (req, res) => {
-	const { firstname, lastname, email, password } = req.body;
+	const { usr_firstname, usr_lastname, usr_email, usr_password } = req.body;
 
-	if (!email || !password) {
+	if (!usr_email || !usr_password) {
 		return res.status(400).send({
 			err: "Email and password are required",
 		});
 	}
 
 	const checkEmail = await User.findOne({
-		where: { usr_email: email },
+		where: { usr_email },
 	});
 
 	if (checkEmail) {
@@ -22,18 +22,18 @@ const register = async (req, res) => {
 	}
 
 	try {
-		const hashPassword = await bcrypt.hash(password, 10);
+		const hashPassword = await bcrypt.hash(usr_password, 10);
 
 		await User.create({
-			usr_firstname: firstname,
-			usr_lastname: lastname,
-			usr_email: email,
+			usr_firstname,
+			usr_lastname,
+			usr_email,
 			usr_password: hashPassword,
 		});
 
-		const { user, session, error } = await sb.auth.signUp({
-			email,
-			password,
+		const { data, error } = await sb.auth.signUp({
+			usr_email,
+			usr_password,
 		});
 
 		if (error) {
@@ -42,6 +42,7 @@ const register = async (req, res) => {
 
 		return res.send({
 			msg: "success",
+			data,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -51,16 +52,16 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-	const { email, password } = req.body;
+	const { usr_email, usr_password } = req.body;
 
-	if (!email || !password) {
+	if (!usr_email || !usr_password) {
 		return res.status(400).send({
 			err: "Email and password are required",
 		});
 	}
 
 	const checkUser = await User.findOne({
-		where: { usr_email: email },
+		where: { usr_email },
 	});
 
 	if (!checkUser) {
@@ -70,7 +71,7 @@ const login = async (req, res) => {
 	}
 
 	const checkPassword = await bcrypt.compare(
-		password,
+		usr_password,
 		checkUser.usr_password
 	);
 
@@ -82,8 +83,8 @@ const login = async (req, res) => {
 
 	try {
 		const { data, error } = await supabaseClient.auth.signInWithPassword({
-			email,
-			password,
+			usr_email,
+			usr_password,
 		});
 
 		if (error) {
@@ -102,14 +103,7 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-	const cookies = req.cookies;
-	const usr_id = req.query.usr_id;
-
-	if (!cookies?.jwt) {
-		return res.send({
-			msg: "success",
-		});
-	}
+	const { usr_id } = req.body;
 
 	const checkUser = await User.findOne({
 		where: { usr_id },

@@ -13,7 +13,7 @@ export default (app) => {
 	app.use("/api/v1/artists", artistRoutes);
 	app.use("/api/v1/songs", songRoutes);
 	app.use("/api/v1/playlists", playlistRoutes);
-	app.use("/api/v1/favorite", favoriteRoutes);
-	app.use("/api/v1/profile", userRoutes);
+	app.use("/api/v1/favorites", favoriteRoutes);
+	app.use("/api/v1/users", userRoutes);
 	app.use("*", notFoundRoutes);
 };

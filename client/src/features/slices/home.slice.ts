@@ -23,5 +23,3 @@ export const homeSlice = createSlice({
 		);
 	},
 });
-
-// export const { some_action } = homeSlice.actions;

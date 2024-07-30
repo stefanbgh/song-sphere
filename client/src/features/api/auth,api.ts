@@ -1,8 +1,14 @@
+import { IUserDTO } from "../../ts/dto/IUserDTO";
 import rootAPI from "./root.api";
+
+interface ILoginDTO {
+	email: string;
+	password: string;
+}
 
 export const authAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		postRegister: builder.mutation<{ id: string }, { id: string }>({
+		postRegister: builder.mutation<{ msg: string; data: [] }, IUserDTO>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/register",
@@ -10,7 +16,7 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		postLogin: builder.mutation<{ id: string }, { id: string }>({
+		postLogin: builder.mutation<{ msg: string; data: [] }, ILoginDTO>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/login",
@@ -18,9 +24,13 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		getLogout: builder.query<{ msg: string }, void>({
-			query: (usr_id) => `/api/v1/logout?usr_id=${usr_id}`,
-			providesTags: ["auth"],
+		postLogout: builder.mutation<{ msg: string }, void>({
+			query: (dto) => ({
+				method: "POST",
+				url: "/api/v1/logout",
+				body: dto,
+			}),
+			invalidatesTags: ["auth"],
 		}),
 	}),
 });
@@ -28,5 +38,5 @@ export const authAPI = rootAPI.injectEndpoints({
 export const {
 	usePostRegisterMutation,
 	usePostLoginMutation,
-	useGetLogoutQuery,
+	usePostLogoutMutation,
 } = authAPI;

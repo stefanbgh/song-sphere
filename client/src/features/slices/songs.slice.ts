@@ -12,7 +12,7 @@ const initialState: InitialState = {
 	song: null,
 };
 
-export const usersSlice = createSlice({
+export const songsSlice = createSlice({
 	name: "songs",
 	initialState,
 	reducers: {},

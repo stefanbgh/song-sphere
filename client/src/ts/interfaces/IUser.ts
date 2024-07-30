@@ -1,7 +1,5 @@
-export interface IUser {
-	usr_id: string;
-	usr_firstname: string;
-	usr_lastname: string;
-	usr_email: string;
-	usr_password: string;
+import { IUserDTO } from "../dto/IUserDTO";
+
+export interface IUser extends IUserDTO {
+	usr_id: number;
 }
