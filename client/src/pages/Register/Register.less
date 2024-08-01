@@ -39,8 +39,22 @@
                 display: flex;
                 justify-content: center;
 
+                &.register {
+                    &-password {
+                        position: relative;
+
+                        .icon {
+                            cursor: pointer;
+                            position: absolute;
+                            top: 50%;
+                            right: 2.5%;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }
+
                 &:last-of-type {
-                    margin-bottom: 1.5rem;
+                    margin-bottom: 1rem;
                 }
 
                 input {
@@ -51,8 +65,26 @@
                     outline: none;
                     color: @txt_color;
 
+                    &.err {
+                        color: @base_color;
+                        font-style: italic;
+                    }
+
                     &:focus {
                         border-bottom: 1px solid @base_color;
+                    }
+                }
+            }
+
+            .error {
+                &-msg {
+                    font-style: italic;
+                    font-size: 1rem;
+                    color: @txt_color;
+                    margin-bottom: 1rem;
+
+                    span {
+                        color: @base_color;
                     }
                 }
             }

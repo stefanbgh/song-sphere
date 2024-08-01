@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, FormEvent, useRef, useState } from "react";
 
 import { NavLink } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
@@ -6,10 +6,41 @@ import AppRoutes from "../../router/Routes";
 import { FcGoogle } from "react-icons/fc";
 
 import mini_logo from "../../assets/mini-logo.png";
-import "./Login.less";
 import { Footer } from "../../components";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+
+import { loginValidation } from "../../utils/validations/login.validation";
+import { IAuth } from "../../ts/interfaces/IAuth";
+
+import "./Login.less";
 
 const Login: FC = () => {
+	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
+	const [isVisible, setIsVisible] = useState<boolean>(false);
+
+	const emailRef = useRef<HTMLInputElement | null>(null);
+	const passwordRef = useRef<HTMLInputElement | null>(null);
+
+	const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		const email = emailRef!.current!.value.trim();
+		const password = passwordRef!.current!.value.trim();
+
+		const { msg, field } = loginValidation(email, password);
+
+		if (msg !== null) {
+			setErr({ msg, field });
+
+			console.log(field);
+
+			return;
+		}
+
+		setErr({ msg: "", field: null });
+		alert("Invalid email address or password");
+	};
+
 	return (
 		<div className="login">
 			<div className="login-form">
@@ -30,13 +61,41 @@ const Login: FC = () => {
 					<p>or</p>
 					<hr />
 				</div>
-				<form action="">
+				<form onSubmit={handleLogin}>
 					<div>
-						<input type="text" placeholder="Enter your email" />
+						<input
+							ref={emailRef}
+							type="text"
+							placeholder="Enter your email"
+							className={err.field === "email" ? "err" : ""}
+						/>
 					</div>
-					<div>
-						<input type="text" placeholder="Enter your password" />
+					<div className="login-password">
+						<input
+							ref={passwordRef}
+							type={isVisible ? "text" : "password"}
+							placeholder="Enter your password"
+							className={err.field === "password" ? "err" : ""}
+						/>
+						{isVisible ? (
+							<IoEyeOutline
+								className="icon"
+								onClick={() => setIsVisible(false)}
+							/>
+						) : (
+							<IoEyeOffOutline
+								className="icon"
+								onClick={() => setIsVisible(true)}
+							/>
+						)}
 					</div>
+					<p className="error-msg">
+						{err.msg && (
+							<>
+								Note: <span>{err.msg}</span>
+							</>
+						)}
+					</p>
 					<div>
 						<NavLink to={AppRoutes.FORGOT_PASSWORD}>
 							Forgot Password?
