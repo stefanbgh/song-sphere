@@ -9,6 +9,7 @@ import { homeSlice } from "../features/slices/home.slice";
 import { playlistsSlice } from "../features/slices/playlists.slice";
 import { songsSlice } from "../features/slices/songs.slice";
 import { usersSlice } from "../features/slices/users.slice";
+import { popupSlice } from "../features/slices/popup.slice";
 
 const rootReducer = combineReducers({
 	[rootAPI.reducerPath]: rootAPI.reducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	favorites: favoritesSlice.reducer,
 	home: homeSlice.reducer,
 	playlists: playlistsSlice.reducer,
+	popup: popupSlice.reducer,
 	songs: songsSlice.reducer,
 	users: usersSlice.reducer,
 });

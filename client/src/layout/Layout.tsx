@@ -1,6 +1,6 @@
-import { Context, FC, ReactNode, useContext, useEffect } from "react";
+import { Context, FC, ReactNode, useContext, useEffect, useState } from "react";
 
-import { Footer, MusicPlayer, Sidebar } from "../components";
+import { Footer, MusicPlayer, PopUp, Sidebar } from "../components";
 import { NavLink, useNavigate } from "react-router-dom";
 import AppRoutes from "../router/Routes";
 
@@ -8,6 +8,10 @@ import SongContext from "../context/SongContext";
 import { ISongContext } from "../ts/interfaces/ISongContext";
 
 import "./Layout.less";
+import { RootState } from "../ts/types/RootState";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { TOGGLE_POPUP } from "../features/slices/popup.slice";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 interface IProps {
 	children: ReactNode;
@@ -15,6 +19,7 @@ interface IProps {
 
 const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
 	const usr_id = localStorage.getItem("usr_id");
+	const { popup } = useAppSelector((state: RootState) => state.popup);
 
 	const navigate = useNavigate();
 
@@ -52,6 +57,7 @@ const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
 				</div>
 			</div>
 			{isActive && <MusicPlayer />}
+			{popup && <PopUp />}
 		</>
 	);
 };

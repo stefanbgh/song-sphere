@@ -34,6 +34,11 @@ const register = async (req, res) => {
 		const { data, error } = await sb.auth.signUp({
 			usr_email,
 			usr_password,
+			options: {
+				data: {
+					display_name: `${usr_firstname} ${usr_lastname}`,
+				},
+			},
 		});
 
 		if (error) {
@@ -102,6 +107,29 @@ const login = async (req, res) => {
 	}
 };
 
+const googleLogin = async (req, res) => {
+	const { provider } = req.body;
+
+	try {
+		const { data, error } = await sb.auth.signInWithOAuth({
+			provider,
+		});
+
+		if (error) {
+			throw new Error(error);
+		}
+
+		return res.send({
+			msg: "success",
+			data,
+		});
+	} catch (error) {
+		return res.status(500).send({
+			err: "Internal server error",
+		});
+	}
+};
+
 const logout = async (req, res) => {
 	const { usr_id } = req.body;
 
@@ -116,7 +144,7 @@ const logout = async (req, res) => {
 	}
 
 	try {
-		const { data, error } = await supabaseClient.auth.signOut();
+		const { data, error } = await sb.auth.signOut();
 
 		if (error) {
 			throw new Error("Internal server error");
@@ -124,6 +152,7 @@ const logout = async (req, res) => {
 
 		return res.send({
 			msg: "success",
+			data,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -132,4 +161,4 @@ const logout = async (req, res) => {
 	}
 };
 
-export { register, login, logout };
+export { register, login, googleLogin, logout };
