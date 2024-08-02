@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { TOGGLE_POPUP } from "../../features/slices/popup.slice";
 
-import mini_logo from "../../assets/mini-logo.png";
+import mini_logo from "../../assets/mini-logo.webp";
 
 import { useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/Routes";

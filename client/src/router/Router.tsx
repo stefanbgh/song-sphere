@@ -31,9 +31,12 @@ import {
 import Layout from "../layout/Layout";
 import AppRoutes from "./Routes";
 
+import { Toaster } from "react-hot-toast";
+
 const Router: React.FC = (): JSX.Element => {
 	return (
 		<BrowserRouter>
+			<Toaster />
 			<BrowserRoutes>
 				{/* App */}
 				<Route

@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 import ProtectedNavLink from "../../hoc/ProtectNavLink";
 import AppRoutes from "../../router/Routes";
 
-import logo from "../../assets/logo.png";
-import mini_logo from "../../assets/mini-logo.png";
+import logo from "../../assets/logo.webp";
+import mini_logo from "../../assets/mini-logo.webp";
 
 import "./Sidebar.less";
 

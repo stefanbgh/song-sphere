@@ -2,14 +2,15 @@ import { FC, MouseEvent } from "react";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { TOGGLE_POPUP } from "../features/slices/popup.slice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
+import { sbAuth } from "../constants/sbAuth.constant";
 
 const ProtectedNavLink: FC<NavLinkProps> = ({ to, ...props }) => {
 	const dispatch = useAppDispatch();
 
 	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-		const userId = localStorage.getItem("usr_id");
+		const auth = localStorage.getItem(sbAuth);
 
-		if (!userId) {
+		if (!auth) {
 			event.preventDefault();
 
 			dispatch(TOGGLE_POPUP(true));

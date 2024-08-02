@@ -1,11 +1,11 @@
 import { FC, FormEvent, useRef, useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
 import { FcGoogle } from "react-icons/fc";
 
-import mini_logo from "../../assets/mini-logo.png";
+import mini_logo from "../../assets/mini-logo.webp";
 import { Footer } from "../../components";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
@@ -13,10 +13,15 @@ import { loginValidation } from "../../utils/validations/login.validation";
 import { IAuth } from "../../ts/interfaces/IAuth";
 
 import "./Login.less";
+import toast from "react-hot-toast";
+import { toastOptions } from "../../options/toast.options";
+import { sbAuth } from "../../constants/sbAuth.constant";
 
 const Login: FC = () => {
 	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
 	const [isVisible, setIsVisible] = useState<boolean>(false);
+
+	const navigate = useNavigate();
 
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -38,7 +43,9 @@ const Login: FC = () => {
 		}
 
 		setErr({ msg: "", field: null });
-		alert("Invalid email address or password");
+		toast.success("Successfully logged in", toastOptions);
+		localStorage.setItem(sbAuth, "ok");
+		navigate(AppRoutes.HOME);
 	};
 
 	return (

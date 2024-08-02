@@ -6,7 +6,7 @@ import AppRoutes from "../../router/Routes";
 import { Footer } from "../../components";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
-import mini_logo from "../../assets/mini-logo.png";
+import mini_logo from "../../assets/mini-logo.webp";
 import { registerValidation } from "../../utils/validations/register.validation";
 import { IAuth } from "../../ts/interfaces/IAuth";
 

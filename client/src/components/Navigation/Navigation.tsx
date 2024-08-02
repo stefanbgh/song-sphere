@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { NavLink } from "react-router-dom";
 
-import { navigationLinks } from "../../constants/navigationLinks";
+import { navigationLinks } from "../../constants/navigationLinks.constant";
 import { INavigationLink } from "../../ts/interfaces/INavigationLink";
 
 import AppRoutes from "../../router/Routes";

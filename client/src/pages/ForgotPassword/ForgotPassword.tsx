@@ -2,7 +2,7 @@ import { FC, FormEvent, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
-import mini_logo from "../../assets/mini-logo.png";
+import mini_logo from "../../assets/mini-logo.webp";
 import { Footer } from "../../components";
 
 import "./ForgotPassword.less";
