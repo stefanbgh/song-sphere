@@ -33,6 +33,26 @@ export const authAPI = rootAPI.injectEndpoints({
 				url: "/api/v1/auth/google-login",
 				body: dto,
 			}),
+			invalidatesTags: ["auth"],
+		}),
+		postForgotPassword: builder.mutation<IResponse, { usr_email: string }>({
+			query: (dto) => ({
+				method: "POST",
+				url: "/api/v1/auth/forgot-password",
+				body: dto,
+			}),
+			invalidatesTags: ["auth"],
+		}),
+		postResetPassword: builder.mutation<
+			IResponse,
+			{ usr_password: string }
+		>({
+			query: (dto) => ({
+				method: "POST",
+				url: "/api/v1/auth/reset-password",
+				body: dto,
+			}),
+			invalidatesTags: ["auth"],
 		}),
 		postLogout: builder.mutation<IResponse, { usr_id: number }>({
 			query: (dto) => ({
@@ -49,5 +69,7 @@ export const {
 	usePostRegisterMutation,
 	usePostLoginMutation,
 	usePostGoogleLoginMutation,
+	usePostForgotPasswordMutation,
+	usePostResetPasswordMutation,
 	usePostLogoutMutation,
 } = authAPI;
