@@ -6,7 +6,7 @@ import { navigationLinks } from "../../constants/navigationLinks.constant";
 import { INavigationLink } from "../../ts/interfaces/INavigationLink";
 
 import AppRoutes from "../../router/Routes";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.webp";
 
 import "./Navigation.less";
 

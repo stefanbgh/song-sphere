@@ -11,7 +11,7 @@ import { FaRandom } from "react-icons/fa";
 import { FaRepeat } from "react-icons/fa6";
 import { MdOutlineLyrics } from "react-icons/md";
 
-import disc from "../../assets/disc.png";
+import disc from "../../assets/disc.webp";
 import SongContext from "../../context/SongContext";
 import { ISongContext } from "../../ts/interfaces/ISongContext";
 

@@ -8,13 +8,14 @@ import {
 	CiViewList,
 } from "react-icons/ci";
 
-import "./Home.less";
 import SongContext from "../../context/SongContext";
 import { ISongContext } from "../../ts/interfaces/ISongContext";
 import ProtectedNavLink from "../../hoc/ProtectNavLink";
 import { RootState } from "../../ts/types/RootState";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useGetDataQuery } from "../../features/api/home.api";
+
+import "./Home.less";
 
 const Home: FC = (): JSX.Element => {
 	useGetDataQuery();
@@ -50,7 +51,7 @@ const Home: FC = (): JSX.Element => {
 							<div className="image">
 								<img
 									width={175}
-									src="https://i.ibb.co/80v3Vgq/ariana-grande.jpg"
+									src="https://i.postimg.cc/LsP0fscK/ariana-grande.webp"
 									alt="artist"
 								/>
 								<div className="overlay"></div>
@@ -62,7 +63,7 @@ const Home: FC = (): JSX.Element => {
 						<div className="image">
 							<img
 								width={175}
-								src="https://i.ibb.co/cyWsPh5/the-weeknd.jpg"
+								src="https://i.postimg.cc/sDRfZBby/the-weeknd.webp"
 								alt="artist"
 							/>
 							<div className="overlay"></div>
@@ -73,7 +74,7 @@ const Home: FC = (): JSX.Element => {
 						<div className="image">
 							<img
 								width={175}
-								src="https://i.ibb.co/Y7dGhR1/beyonce.jpg"
+								src="https://i.postimg.cc/2SMKVWX7/beyonce.webp"
 								alt="artist"
 							/>
 							<div className="overlay"></div>
@@ -84,7 +85,7 @@ const Home: FC = (): JSX.Element => {
 						<div className="image">
 							<img
 								width={175}
-								src="https://i.ibb.co/1fcBKQC/bruno-mars.jpg"
+								src="https://i.postimg.cc/28HJNMQJ/bruno-mars.webp"
 								alt="artist"
 							/>
 							<div className="overlay"></div>
@@ -95,18 +96,18 @@ const Home: FC = (): JSX.Element => {
 						<div className="image">
 							<img
 								width={175}
-								src="https://i.ibb.co/TtrbmBN/rihanna.jpg"
+								src="https://i.postimg.cc/2ydDxwgY/rihanna.webp"
 								alt="artist"
 							/>
 							<div className="overlay"></div>
 						</div>
-						<p>Rhiana</p>
+						<p>Rihanna</p>
 					</div>
 					<div className="card">
 						<div className="image">
 							<img
 								width={175}
-								src="https://i.ibb.co/Y8MynSP/eminem.jpg"
+								src="https://i.postimg.cc/Pfbs9SFs/eminem.webp"
 								alt="artist"
 							/>
 							<div className="overlay"></div>

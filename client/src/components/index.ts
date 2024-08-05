@@ -6,4 +6,5 @@ export { default as List } from "./List/List";
 export { default as MusicPlayer } from "./MusicPlayer/MusicPlayer";
 export { default as PopUp } from "./PopUp/PopUp";
 export { default as Footer } from "./Footer/Footer";
+export { default as Spinner } from "./Spinner/Spinner";
 export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";

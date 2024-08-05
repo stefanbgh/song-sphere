@@ -20,7 +20,7 @@ const Artist: FC = () => {
 				<div className="picture">
 					<img
 						width={200}
-						src="https://i.ibb.co/fSxTLB8/adele.jpg"
+						src="https://i.postimg.cc/gJqSSTcg/adele.webp"
 						alt="artist"
 					/>
 					<div className="overlay"></div>
