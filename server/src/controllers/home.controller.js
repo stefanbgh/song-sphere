@@ -10,7 +10,7 @@ const home = async (req, res) => {
 
 		const popularSongs = await Song.findAll({
 			order: [["sng_popularity", "DESC"]],
-			limit: 6,
+			limit: 5,
 		});
 
 		return res.send({

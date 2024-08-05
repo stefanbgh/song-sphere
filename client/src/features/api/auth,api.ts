@@ -6,7 +6,7 @@ import rootAPI from "./root.api";
 
 interface IResponse {
 	msg: string;
-	data: [];
+	data: [] | string;
 }
 
 export const authAPI = rootAPI.injectEndpoints({
@@ -48,5 +48,6 @@ export const authAPI = rootAPI.injectEndpoints({
 export const {
 	usePostRegisterMutation,
 	usePostLoginMutation,
+	usePostGoogleLoginMutation,
 	usePostLogoutMutation,
 } = authAPI;

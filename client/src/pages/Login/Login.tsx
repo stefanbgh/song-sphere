@@ -6,27 +6,37 @@ import AppRoutes from "../../router/Routes";
 import { FcGoogle } from "react-icons/fc";
 
 import mini_logo from "../../assets/mini-logo.webp";
-import { Footer } from "../../components";
+import { Footer, Spinner } from "../../components";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 import { loginValidation } from "../../utils/validations/login.validation";
 import { IAuth } from "../../ts/interfaces/IAuth";
 
-import "./Login.less";
 import toast from "react-hot-toast";
 import { toastOptions } from "../../options/toast.options";
 import { sbAuth } from "../../constants/sbAuth.constant";
+import {
+	usePostGoogleLoginMutation,
+	usePostLoginMutation,
+} from "../../features/api/auth,api";
+import { Err } from "../../ts/types/Err";
+
+import "./Login.less";
 
 const Login: FC = () => {
 	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
 	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const [postLogin] = usePostLoginMutation();
+	const [postGoogleLogin] = usePostGoogleLoginMutation();
 
 	const navigate = useNavigate();
 
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 
-	const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+	const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const email = emailRef!.current!.value.trim();
@@ -37,15 +47,38 @@ const Login: FC = () => {
 		if (msg !== null) {
 			setErr({ msg, field });
 
-			console.log(field);
+			return;
+		}
+
+		setIsLoading(true);
+		setErr({ msg: "", field: null });
+
+		const res = await postLogin({
+			usr_email: email,
+			usr_password: password,
+		});
+
+		if (res.error) {
+			const error = res.error as Err;
+
+			toast.error(error.data.err, toastOptions);
+
+			setIsLoading(false);
 
 			return;
 		}
 
-		setErr({ msg: "", field: null });
+		setIsLoading(false);
+
 		toast.success("Successfully logged in", toastOptions);
-		localStorage.setItem(sbAuth, "ok");
+		localStorage.setItem(sbAuth, res.data.data as string);
 		navigate(AppRoutes.HOME);
+	};
+
+	const handleGoogleLogin = async () => {
+		const res = await postGoogleLogin({ provider: "google" });
+
+		window.location.href = res.data?.data.url;
 	};
 
 	return (
@@ -59,7 +92,7 @@ const Login: FC = () => {
 					<p>Don't have an account?</p>
 					<NavLink to={AppRoutes.REGISTER}>Register</NavLink>
 				</div>
-				<button className="google">
+				<button className="google" onClick={handleGoogleLogin}>
 					<FcGoogle size={25} />
 					<p>Login with Google</p>
 				</button>
@@ -111,6 +144,7 @@ const Login: FC = () => {
 					</div>
 				</form>
 			</div>
+			{isLoading && <Spinner />}
 			<Footer />
 		</div>
 	);

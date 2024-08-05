@@ -1,4 +1,4 @@
-import { Context, FC, useContext, useEffect } from "react";
+import { Context, FC, useContext } from "react";
 
 import AppRoutes from "../../router/Routes";
 import {
@@ -15,22 +15,26 @@ import { RootState } from "../../ts/types/RootState";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useGetDataQuery } from "../../features/api/home.api";
 
+import { Spinner } from "../../components";
+import { IArtist } from "../../ts/interfaces/IArtist";
+import { ISong } from "../../ts/interfaces/ISong";
+import { sbAuth } from "../../constants/sbAuth.constant";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { TOGGLE_POPUP } from "../../features/slices/popup.slice";
+
 import "./Home.less";
 
 const Home: FC = (): JSX.Element => {
 	useGetDataQuery();
 	const { home } = useAppSelector((state: RootState) => state.home);
+	const dispatch = useAppDispatch();
 
-	const usr_id = localStorage.getItem("usr_id");
+	const auth = localStorage.getItem(sbAuth);
 	const { setIsActive } = useContext(SongContext as Context<ISongContext>);
 
-	useEffect(() => {
-		console.log(home);
-	}, [home]);
-
 	const handlePlay = () => {
-		if (!usr_id) {
-			alert("You need to log in to access this page.");
+		if (!auth) {
+			dispatch(TOGGLE_POPUP(true));
 
 			return;
 		}
@@ -39,147 +43,88 @@ const Home: FC = (): JSX.Element => {
 	};
 
 	return (
-		<section className="home">
-			<div className="popular popular-artists">
-				<h2>
-					<CiMicrophoneOn size={24} className="star" />
-					<span>Popular artists</span>
-				</h2>
-				<div className="cards">
-					<ProtectedNavLink to={`${AppRoutes.ARTISTS}/1`}>
-						<div className="card">
-							<div className="image">
-								<img
-									width={175}
-									src="https://i.postimg.cc/LsP0fscK/ariana-grande.webp"
-									alt="artist"
-								/>
-								<div className="overlay"></div>
-							</div>
-							<p>Ariana Grande</p>
+		<>
+			{home ? (
+				<section className="home">
+					<div className="popular popular-artists">
+						<h2>
+							<CiMicrophoneOn size={24} className="star" />
+							<span>Popular artists</span>
+						</h2>
+						<div className="cards">
+							{home.popular_artists.map((artist: IArtist) => {
+								const { art_id, art_image, art_name } = artist;
+
+								return (
+									<ProtectedNavLink
+										to={`${AppRoutes.ARTISTS}/${art_id}`}
+										key={art_id}
+									>
+										<div className="card">
+											<div className="image">
+												<img
+													width={175}
+													src={art_image}
+													alt="artist"
+												/>
+												<div className="overlay"></div>
+											</div>
+											<p>{art_name}</p>
+										</div>
+									</ProtectedNavLink>
+								);
+							})}
+							<ProtectedNavLink to={AppRoutes.ARTISTS}>
+								Show more
+							</ProtectedNavLink>
 						</div>
-					</ProtectedNavLink>
-					<div className="card">
-						<div className="image">
-							<img
-								width={175}
-								src="https://i.postimg.cc/sDRfZBby/the-weeknd.webp"
-								alt="artist"
-							/>
-							<div className="overlay"></div>
-						</div>
-						<p>The Weeknd</p>
 					</div>
-					<div className="card">
-						<div className="image">
-							<img
-								width={175}
-								src="https://i.postimg.cc/2SMKVWX7/beyonce.webp"
-								alt="artist"
-							/>
-							<div className="overlay"></div>
+					<div className="popular popular-songs">
+						<h2>
+							<CiStar size={24} className="star" />
+							<span>Popular Songs</span>
+						</h2>
+						<div className="cards">
+							{home.popular_songs.map((song: ISong) => {
+								const { sng_id, sng_title } = song;
+
+								return (
+									<div
+										className="card"
+										onClick={handlePlay}
+										key={sng_id}
+									>
+										<div>
+											<CiMusicNote1 size={50} />
+										</div>
+										<p>{sng_title}</p>
+									</div>
+								);
+							})}
+							<ProtectedNavLink to={AppRoutes.SONGS}>
+								Show more
+							</ProtectedNavLink>
 						</div>
-						<p>Beyonce</p>
 					</div>
-					<div className="card">
-						<div className="image">
-							<img
-								width={175}
-								src="https://i.postimg.cc/28HJNMQJ/bruno-mars.webp"
-								alt="artist"
-							/>
-							<div className="overlay"></div>
-						</div>
-						<p>Bruno Mars</p>
+					<div className="popular popular-playlist">
+						<h2>
+							<CiViewList size={24} className="star" />
+							<span>SongSphere Playlist</span>
+						</h2>
+						<p>
+							- Open the world of music with the{" "}
+							<span>SongSphere</span> playlist, as our playlist
+							has everything you need.
+						</p>
+						<ProtectedNavLink to={AppRoutes.OUR_PLAYLIST}>
+							View playlist
+						</ProtectedNavLink>
 					</div>
-					<div className="card">
-						<div className="image">
-							<img
-								width={175}
-								src="https://i.postimg.cc/2ydDxwgY/rihanna.webp"
-								alt="artist"
-							/>
-							<div className="overlay"></div>
-						</div>
-						<p>Rihanna</p>
-					</div>
-					<div className="card">
-						<div className="image">
-							<img
-								width={175}
-								src="https://i.postimg.cc/Pfbs9SFs/eminem.webp"
-								alt="artist"
-							/>
-							<div className="overlay"></div>
-						</div>
-						<p>Eminem</p>
-					</div>
-					<ProtectedNavLink to={AppRoutes.ARTISTS}>
-						Show more
-					</ProtectedNavLink>
-				</div>
-			</div>
-			<div className="popular popular-songs">
-				<h2>
-					<CiStar size={24} className="star" />
-					<span>Popular Songs</span>
-				</h2>
-				<div className="cards">
-					<div className="card" onClick={handlePlay}>
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<div className="card">
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<div className="card">
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<div className="card">
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<div className="card">
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<div className="card">
-						<div>
-							<CiMusicNote1 size={50} />
-						</div>
-						<p>Song 1</p>
-					</div>
-					<ProtectedNavLink to={AppRoutes.SONGS}>
-						Show more
-					</ProtectedNavLink>
-				</div>
-			</div>
-			<div className="popular popular-playlist">
-				<h2>
-					<CiViewList size={24} className="star" />
-					<span>SongSphere Playlist</span>
-				</h2>
-				<p>
-					- Open the world of music with the <span>SongSphere</span>{" "}
-					playlist, as our playlist has everything you need.
-				</p>
-				<ProtectedNavLink to={AppRoutes.OUR_PLAYLIST}>
-					View playlist
-				</ProtectedNavLink>
-			</div>
-		</section>
+				</section>
+			) : (
+				<Spinner />
+			)}
+		</>
 	);
 };
 

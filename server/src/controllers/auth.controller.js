@@ -24,16 +24,9 @@ const register = async (req, res) => {
 	try {
 		const hashPassword = await bcrypt.hash(usr_password, 10);
 
-		await User.create({
-			usr_firstname,
-			usr_lastname,
-			usr_email,
-			usr_password: hashPassword,
-		});
-
 		const { data, error } = await sb.auth.signUp({
-			usr_email,
-			usr_password,
+			email: usr_email,
+			password: usr_password,
 			options: {
 				data: {
 					display_name: `${usr_firstname} ${usr_lastname}`,
@@ -42,8 +35,18 @@ const register = async (req, res) => {
 		});
 
 		if (error) {
-			throw new Error("Internal server error");
+			return res.status(error.status).send({
+				err: error.message,
+			});
 		}
+
+		await User.create({
+			usr_id: data.user.id,
+			usr_firstname,
+			usr_lastname,
+			usr_email,
+			usr_password: hashPassword,
+		});
 
 		return res.send({
 			msg: "success",
@@ -82,23 +85,25 @@ const login = async (req, res) => {
 
 	if (!checkPassword) {
 		return res.status(401).send({
-			err: "Email or password is incorrect",
+			err: "Password or email is incorrect",
 		});
 	}
 
 	try {
-		const { data, error } = await supabaseClient.auth.signInWithPassword({
-			usr_email,
-			usr_password,
+		const { data, error } = await sb.auth.signInWithPassword({
+			email: usr_email,
+			password: usr_password,
 		});
 
 		if (error) {
-			throw new Error("Internal server error");
+			return res.status(error.status).send({
+				err: error.message,
+			});
 		}
 
 		return res.send({
 			msg: "success",
-			data,
+			data: data.user.id,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -116,7 +121,71 @@ const googleLogin = async (req, res) => {
 		});
 
 		if (error) {
-			throw new Error(error);
+			return res.status(error.status).send({
+				err: error.message,
+			});
+		}
+
+		return res.send({
+			msg: "success",
+			data: data,
+		});
+	} catch (error) {
+		return res.status(500).send({
+			err: "Internal server error",
+		});
+	}
+};
+
+const forgotPassword = async (req, res) => {
+	const { usr_email } = req.body;
+
+	if (!usr_email) {
+		return res.status(401).send({
+			err: "Email is required",
+		});
+	}
+
+	try {
+		const { data, error } = await sb.auth.resetPasswordForEmail(usr_email);
+
+		if (error) {
+			return res.status(error.status).send({
+				err: error.message,
+			});
+		}
+
+		return res.send({
+			msg: "success",
+			data,
+		});
+	} catch (error) {
+		return res.status(500).send({
+			err: "Internal server error",
+		});
+	}
+};
+
+const resetPassword = async (req, res) => {
+	const { usr_password } = req.body;
+
+	if (!usr_password) {
+		return res.status(401).send({
+			err: "Password cannot be empty",
+		});
+	}
+
+	try {
+		const hashPassword = await bcrypt.hash(usr_password, 10);
+
+		const { data, error } = await sb.auth.updateUser({
+			password: hashPassword,
+		});
+
+		if (error) {
+			return res.status(error.status).send({
+				err: error.message,
+			});
 		}
 
 		return res.send({
@@ -147,7 +216,9 @@ const logout = async (req, res) => {
 		const { data, error } = await sb.auth.signOut();
 
 		if (error) {
-			throw new Error("Internal server error");
+			return res.status(error.status).send({
+				err: error.message,
+			});
 		}
 
 		return res.send({
@@ -161,4 +232,4 @@ const logout = async (req, res) => {
 	}
 };
 
-export { register, login, googleLogin, logout };
+export { register, login, googleLogin, forgotPassword, resetPassword, logout };

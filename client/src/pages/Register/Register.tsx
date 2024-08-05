@@ -1,27 +1,35 @@
 import { FC, FormEvent, useRef, useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
-import { Footer } from "../../components";
+import { Footer, Spinner } from "../../components";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 import mini_logo from "../../assets/mini-logo.webp";
 import { registerValidation } from "../../utils/validations/register.validation";
 import { IAuth } from "../../ts/interfaces/IAuth";
+import { usePostRegisterMutation } from "../../features/api/auth,api";
+import toast from "react-hot-toast";
+import { toastOptions } from "../../options/toast.options";
+import { Err } from "../../ts/types/Err";
 
 import "./Register.less";
 
 const Register: FC = () => {
 	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
 	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [postRegister] = usePostRegisterMutation();
+
+	const navigate = useNavigate();
 
 	const firstNameRef = useRef<HTMLInputElement | null>(null);
 	const lastNameRef = useRef<HTMLInputElement | null>(null);
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 
-	const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+	const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const firstName = firstNameRef!.current!.value.trim();
@@ -42,8 +50,36 @@ const Register: FC = () => {
 			return;
 		}
 
+		setIsLoading(true);
+
+		const res = await postRegister({
+			usr_firstname: firstName,
+			usr_email: email,
+			usr_lastname: lastName,
+			usr_password: password,
+		});
+
+		if (res.error) {
+			setIsLoading(false);
+
+			const error = res.error as Err;
+
+			if (error.status === 429) {
+				toast.error(`${error.data.err}. Try again later`, toastOptions);
+
+				return;
+			}
+
+			toast.error(error.data.err, toastOptions);
+
+			return;
+		}
+
+		setIsLoading(false);
 		setErr({ msg: "", field: null });
-		alert("Register successfully");
+		toast.success("Check your email address", toastOptions);
+		toast.success("Register successfully", toastOptions);
+		navigate(AppRoutes.LOGIN);
 	};
 
 	return (
@@ -111,6 +147,7 @@ const Register: FC = () => {
 					<button>Register</button>
 				</form>
 			</div>
+			{isLoading && <Spinner />}
 			<Footer />
 		</div>
 	);
