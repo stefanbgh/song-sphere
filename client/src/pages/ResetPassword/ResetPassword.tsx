@@ -3,17 +3,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
 import mini_logo from "../../assets/mini-logo.webp";
-import { Footer } from "../../components";
+import { Footer, Spinner } from "../../components";
 
 import toast from "react-hot-toast";
 import { toastOptions } from "../../options/toast.options";
 import sb from "../../supabase";
+import { passwordValidation } from "../../utils/validations/password.validation";
 
 import "./ResetPassword.less";
-import { passwordValidation } from "../../utils/validations/password.validation";
 
 const ResetPassword: FC = () => {
 	const [err, setErr] = useState<string>("");
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const newPasswordRef = useRef<HTMLInputElement | null>(null);
 	const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -34,10 +35,13 @@ const ResetPassword: FC = () => {
 		}
 
 		setErr("");
+		setIsLoading(true);
 
 		const { error } = await sb.auth.updateUser({
 			password: confirmPassword,
 		});
+
+		setIsLoading(false);
 
 		if (error) {
 			toast.error(error.message, toastOptions);
@@ -85,6 +89,7 @@ const ResetPassword: FC = () => {
 					<button>Reset password</button>
 				</form>
 			</div>
+			{isLoading && <Spinner />}
 			<Footer />
 		</div>
 	);

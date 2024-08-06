@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
 import mini_logo from "../../assets/mini-logo.webp";
-import { Footer } from "../../components";
+import { Footer, Spinner } from "../../components";
 
 import { emailRegex } from "../../utils/helpers/emailRegex";
 import toast from "react-hot-toast";
@@ -14,6 +14,7 @@ import "./ForgotPassword.less";
 
 const ForgotPassword: FC = () => {
 	const [err, setErr] = useState<string>("");
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const emailRef = useRef<HTMLInputElement | null>(null);
 
 	const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,8 +29,11 @@ const ForgotPassword: FC = () => {
 		}
 
 		setErr("");
+		setIsLoading(true);
 
 		const { error } = await sb.auth.resetPasswordForEmail(email);
+
+		setIsLoading(false);
 
 		if (error) {
 			if (error.status === 429) {
@@ -75,6 +79,7 @@ const ForgotPassword: FC = () => {
 					<button>Send instructions</button>
 				</form>
 			</div>
+			{isLoading && <Spinner />}
 			<Footer />
 		</div>
 	);
