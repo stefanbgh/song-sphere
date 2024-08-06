@@ -9,18 +9,16 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import mini_logo from "../../assets/mini-logo.webp";
 import { registerValidation } from "../../utils/validations/register.validation";
 import { IAuth } from "../../ts/interfaces/IAuth";
-import { usePostRegisterMutation } from "../../features/api/auth,api";
 import toast from "react-hot-toast";
 import { toastOptions } from "../../options/toast.options";
-import { Err } from "../../ts/types/Err";
 
 import "./Register.less";
+import sb from "../../supabase";
 
 const Register: FC = () => {
 	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [postRegister] = usePostRegisterMutation();
 
 	const navigate = useNavigate();
 
@@ -52,25 +50,26 @@ const Register: FC = () => {
 
 		setIsLoading(true);
 
-		const res = await postRegister({
-			usr_firstname: firstName,
-			usr_email: email,
-			usr_lastname: lastName,
-			usr_password: password,
+		const { error } = await sb.auth.signUp({
+			email,
+			password,
+			options: {
+				data: {
+					display_name: `${firstName} ${lastName}`,
+				},
+			},
 		});
 
-		if (res.error) {
+		if (error) {
 			setIsLoading(false);
 
-			const error = res.error as Err;
-
 			if (error.status === 429) {
-				toast.error(`${error.data.err}. Try again later`, toastOptions);
+				toast.error(`${error.message}. Try again later`, toastOptions);
 
 				return;
 			}
 
-			toast.error(error.data.err, toastOptions);
+			toast.error(error.message, toastOptions);
 
 			return;
 		}

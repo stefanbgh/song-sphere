@@ -5,14 +5,18 @@ import AppRoutes from "../../router/Routes";
 import mini_logo from "../../assets/mini-logo.webp";
 import { Footer } from "../../components";
 
-import "./ForgotPassword.less";
 import { emailRegex } from "../../utils/helpers/emailRegex";
+import toast from "react-hot-toast";
+import { toastOptions } from "../../options/toast.options";
+import sb from "../../supabase";
+
+import "./ForgotPassword.less";
 
 const ForgotPassword: FC = () => {
 	const [err, setErr] = useState<string>("");
 	const emailRef = useRef<HTMLInputElement | null>(null);
 
-	const handleForgotPassword = (e: FormEvent<HTMLFormElement>) => {
+	const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const email = emailRef!.current!.value.trim();
@@ -24,7 +28,22 @@ const ForgotPassword: FC = () => {
 		}
 
 		setErr("");
-		alert("Check your email address");
+
+		const { error } = await sb.auth.resetPasswordForEmail(email);
+
+		if (error) {
+			if (error.status === 429) {
+				toast.error(`${error.message}. Try again later`, toastOptions);
+
+				return;
+			}
+
+			toast.error(error.message, toastOptions);
+
+			return;
+		}
+
+		toast.success("Check your email address", toastOptions);
 	};
 
 	return (

@@ -1,50 +1,52 @@
 import { FC, FormEvent, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
 
 import mini_logo from "../../assets/mini-logo.webp";
 import { Footer } from "../../components";
 
+import toast from "react-hot-toast";
+import { toastOptions } from "../../options/toast.options";
+import sb from "../../supabase";
+
 import "./ResetPassword.less";
+import { passwordValidation } from "../../utils/validations/password.validation";
 
 const ResetPassword: FC = () => {
 	const [err, setErr] = useState<string>("");
 
 	const newPasswordRef = useRef<HTMLInputElement | null>(null);
 	const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+	const navigate = useNavigate();
 
-	const handleResetPassword = (e: FormEvent<HTMLFormElement>) => {
+	const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const newPassword = newPasswordRef!.current!.value.trim();
 		const confirmPassword = confirmPasswordRef!.current!.value.trim();
 
-		if (!newPassword || !confirmPassword) {
-			setErr("Fields cannot be empty");
+		const res = passwordValidation(newPassword, confirmPassword);
 
-			return;
-		}
-
-		if (newPassword !== confirmPassword) {
-			setErr("Passwords do not match");
-
-			return;
-		}
-
-		if (confirmPassword.length < 4) {
-			setErr("Password must be at least 4 characters");
-
-			return;
-		}
-
-		if (confirmPassword.length > 255) {
-			setErr("Password must be less than 255 characters");
+		if (res !== null) {
+			setErr(res);
 
 			return;
 		}
 
 		setErr("");
-		alert("Password changed successfully");
+
+		const { error } = await sb.auth.updateUser({
+			password: confirmPassword,
+		});
+
+		if (error) {
+			toast.error(error.message, toastOptions);
+
+			return;
+		}
+
+		toast.success("Password changed successfully", toastOptions);
+		navigate(AppRoutes.LOGIN);
 	};
 
 	return (

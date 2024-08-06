@@ -14,22 +14,14 @@ import { IAuth } from "../../ts/interfaces/IAuth";
 
 import toast from "react-hot-toast";
 import { toastOptions } from "../../options/toast.options";
-import { sbAuth } from "../../constants/sbAuth.constant";
-import {
-	usePostGoogleLoginMutation,
-	usePostLoginMutation,
-} from "../../features/api/auth,api";
-import { Err } from "../../ts/types/Err";
 
 import "./Login.less";
+import sb from "../../supabase";
 
 const Login: FC = () => {
 	const [err, setErr] = useState<IAuth>({ msg: "", field: null });
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	const [postLogin] = usePostLoginMutation();
-	const [postGoogleLogin] = usePostGoogleLoginMutation();
 
 	const navigate = useNavigate();
 
@@ -53,15 +45,13 @@ const Login: FC = () => {
 		setIsLoading(true);
 		setErr({ msg: "", field: null });
 
-		const res = await postLogin({
-			usr_email: email,
-			usr_password: password,
+		const { error } = await sb.auth.signInWithPassword({
+			email,
+			password,
 		});
 
-		if (res.error) {
-			const error = res.error as Err;
-
-			toast.error(error.data.err, toastOptions);
+		if (error) {
+			toast.error(error.message, toastOptions);
 
 			setIsLoading(false);
 
@@ -71,14 +61,17 @@ const Login: FC = () => {
 		setIsLoading(false);
 
 		toast.success("Successfully logged in", toastOptions);
-		localStorage.setItem(sbAuth, res.data.data as string);
 		navigate(AppRoutes.HOME);
 	};
 
 	const handleGoogleLogin = async () => {
-		const res = await postGoogleLogin({ provider: "google" });
+		const { error } = await sb.auth.signInWithOAuth({
+			provider: "google",
+		});
 
-		window.location.href = res.data?.data.url;
+		if (error) {
+			toast.error(error.message, toastOptions);
+		}
 	};
 
 	return (
