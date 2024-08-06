@@ -1,11 +1,26 @@
 import { FC } from "react";
 
-import "./Profile.less";
-
 import { MdInfoOutline, MdInsertChartOutlined } from "react-icons/md";
 import { IoMdOptions } from "react-icons/io";
 
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { RootState } from "../../ts/types/RootState";
+
+import { useYourActivityQuery } from "../../features/api/users.api";
+import { sbAuth } from "../../constants/sbAuth.constant";
+
+import "./Profile.less";
+
 const Profile: FC = () => {
+	const token = localStorage.getItem(sbAuth);
+	const { user: userData } = JSON.parse(token!);
+
+	const { user, yourActivity } = useAppSelector(
+		(state: RootState) => state.users
+	);
+
+	useYourActivityQuery(userData.id);
+
 	return (
 		<div className="profile">
 			<div className="profile-title">
@@ -21,13 +36,10 @@ const Profile: FC = () => {
 					<h3>Your Information:</h3>
 				</div>
 				<p>
-					First Name: <span>John</span>
+					Full Name: <span>{user?.usr_fullname}</span>
 				</p>
 				<p>
-					Last Name: <span>Doe</span>
-				</p>
-				<p>
-					Email: <span>example@gmail.com</span>
+					Email: <span>{user?.usr_email}</span>
 				</p>
 			</div>
 			<div className="activity">
@@ -36,10 +48,10 @@ const Profile: FC = () => {
 					<h3>Your Activity:</h3>
 				</div>
 				<p>
-					Favorite Songs: <span>0</span>
+					Favorite Songs: <span>{yourActivity?.favorites}</span>
 				</p>
 				<p>
-					Songs in Playlist: <span>0</span>
+					Songs in Playlist: <span>{yourActivity?.playlists}</span>
 				</p>
 			</div>
 			<div className="options">

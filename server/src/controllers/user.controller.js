@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import Favorite from "../models/Favorite.js";
+import Playlist from "../models/Playlist.js";
 
 const getSingleUser = async (req, res) => {
 	const usr_id = req.params.id;
@@ -17,6 +19,34 @@ const getSingleUser = async (req, res) => {
 		return res.send({
 			msg: "success",
 			user: getSingleUser,
+		});
+	} catch (error) {
+		return res.status(500).send({
+			err: "Internal server error",
+		});
+	}
+};
+
+const yourActivity = async (req, res) => {
+	const usr_id = req.params.id;
+
+	try {
+		const favoriteCount = await Favorite.count({
+			where: {
+				fav_usr_id: usr_id,
+			},
+		});
+
+		const playlistCount = await Playlist.count({
+			where: {
+				ply_usr_id: usr_id,
+			},
+		});
+
+		return res.send({
+			msg: "success",
+			favorites: favoriteCount,
+			playlists: playlistCount,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -98,4 +128,4 @@ const deleteUser = async (req, res) => {
 	});
 };
 
-export { getSingleUser, addUser, updateUser, deleteUser };
+export { getSingleUser, yourActivity, addUser, updateUser, deleteUser };

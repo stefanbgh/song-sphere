@@ -1,11 +1,17 @@
 import { IUserDTO } from "../../ts/dto/IUserDTO";
 import { IUser } from "../../ts/interfaces/IUser";
+import { IYourActivity } from "../../ts/interfaces/IYourActivity";
+
 import rootAPI from "./root.api";
 
 export const usersAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		getUser: builder.query<{ msg: string; user: IUser }, void>({
-			query: () => "/api/v1/users",
+		getUser: builder.query<{ msg: string; user: IUser }, string>({
+			query: (usr_id) => `/api/v1/users/${usr_id}`,
+			providesTags: ["users"],
+		}),
+		yourActivity: builder.query<IYourActivity, string>({
+			query: (usr_id) => `/api/v1/users/your-activity/${usr_id}`,
 			providesTags: ["users"],
 		}),
 		addUser: builder.mutation<{ msg: string }, IUserDTO>({
@@ -36,6 +42,7 @@ export const usersAPI = rootAPI.injectEndpoints({
 
 export const {
 	useGetUserQuery,
+	useYourActivityQuery,
 	useAddUserMutation,
 	useUpdateUserMutation,
 	useDeleteUserMutation,

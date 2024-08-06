@@ -32,6 +32,7 @@ import Layout from "../layout/Layout";
 import AppRoutes from "./Routes";
 
 import { Toaster } from "react-hot-toast";
+import AuthLayout from "../layout/auth/AuthLayout";
 
 const Router: React.FC = (): JSX.Element => {
 	return (
@@ -123,15 +124,37 @@ const Router: React.FC = (): JSX.Element => {
 				<Route path={AppRoutes.TERMS_OF_USE} element={<TermsOfUse />} />
 
 				{/* Auth */}
-				<Route path={AppRoutes.LOGIN} element={<Login />} />
-				<Route path={AppRoutes.REGISTER} element={<Register />} />
+				<Route
+					path={AppRoutes.LOGIN}
+					element={
+						<AuthLayout>
+							<Login />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path={AppRoutes.REGISTER}
+					element={
+						<AuthLayout>
+							<Register />
+						</AuthLayout>
+					}
+				/>
 				<Route
 					path={AppRoutes.FORGOT_PASSWORD}
-					element={<ForgotPassword />}
+					element={
+						<AuthLayout>
+							<ForgotPassword />
+						</AuthLayout>
+					}
 				/>
 				<Route
 					path={AppRoutes.RESET_PASSWORD}
-					element={<ResetPassword />}
+					element={
+						<AuthLayout>
+							<ResetPassword />
+						</AuthLayout>
+					}
 				/>
 				<Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
 			</BrowserRoutes>

@@ -15,7 +15,7 @@ const Favorite = sequelize.define(
 			allowNull: false,
 		},
 		fav_usr_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 	},
