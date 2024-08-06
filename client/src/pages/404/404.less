@@ -1,0 +1,43 @@
+@import "../../less/abstract/_variables.less";
+
+.not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.75rem;
+    padding: 50px;
+    height: 100vh;
+    width: 100%;
+
+    .message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: .25rem;
+
+        h1 {
+            font-size: 2em;
+            color: @base_color;
+        }
+    }
+  
+    .btn {
+        display: inline-block;
+        padding: .75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: @primary_color;
+        background: @base_color;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: .3s;
+  
+        &:hover {
+            background-color: @base_color_hover;
+        }
+    }
+}
+  
