@@ -1,3 +1,4 @@
+export { default as Navbar } from "./Navbar/Navbar";
 export { default as Sidebar } from "./Sidebar/Sidebar";
 export { default as Navigation } from "./Navigation/Navigation";
 export { default as Title } from "./Title/Title";

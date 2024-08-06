@@ -1,14 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../ts/interfaces/IUser";
-import { usersAPI } from "../api/users.api";
 
 interface InitialState {
-	users: IUser[] | null;
 	user: IUser | null;
 }
 
 const initialState: InitialState = {
-	users: null,
 	user: null,
 };
 
@@ -16,18 +13,21 @@ export const usersSlice = createSlice({
 	name: "users",
 	initialState,
 	reducers: {
-		SAY_HI: () => {
-			console.log("Hi!");
+		CREATE_USER_INFO: (state, action: PayloadAction<IUser>) => {
+			const { usr_id, usr_fullname, usr_email, usr_password } =
+				action.payload;
+
+			state.user = {
+				usr_id,
+				usr_fullname,
+				usr_email,
+				usr_password,
+			};
 		},
-	},
-	extraReducers: (builder) => {
-		builder.addMatcher(
-			usersAPI.endpoints.getUsers.matchFulfilled,
-			(state, action: PayloadAction<IUser[]>) => {
-				state.users = action.payload;
-			}
-		);
+		REMOVE_USER_INFO: (state) => {
+			state.user = null;
+		},
 	},
 });
 
-export const { SAY_HI } = usersSlice.actions;
+export const { CREATE_USER_INFO, REMOVE_USER_INFO } = usersSlice.actions;

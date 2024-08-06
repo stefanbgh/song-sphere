@@ -1,11 +1,13 @@
 import { FC } from "react";
 
-import "./Spinner.less";
+import "./Spinner.less"; // Uvezi svoj .less fajl
 
 const Spinner: FC = (): JSX.Element => {
 	return (
 		<div className="spinner">
-			<p>Loading...</p>
+			<div className="dot"></div>
+			<div className="dot"></div>
+			<div className="dot"></div>
 		</div>
 	);
 };

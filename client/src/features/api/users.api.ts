@@ -4,7 +4,7 @@ import rootAPI from "./root.api";
 
 export const usersAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		getUsers: builder.query<{ msg: string; user: IUser }, void>({
+		getUser: builder.query<{ msg: string; user: IUser }, void>({
 			query: () => "/api/v1/users",
 			providesTags: ["users"],
 		}),
@@ -35,7 +35,7 @@ export const usersAPI = rootAPI.injectEndpoints({
 });
 
 export const {
-	useGetUsersQuery,
+	useGetUserQuery,
 	useAddUserMutation,
 	useUpdateUserMutation,
 	useDeleteUserMutation,
