@@ -11,7 +11,7 @@ import { sbAuth } from "../../constants/sbAuth.constant";
 
 import "./Profile.less";
 
-const Profile: FC = () => {
+const Profile: FC = (): JSX.Element | null => {
 	const token = localStorage.getItem(sbAuth);
 	const { user: userData } = JSON.parse(token!);
 

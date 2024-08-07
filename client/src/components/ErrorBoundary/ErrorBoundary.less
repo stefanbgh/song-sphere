@@ -1,5 +1,20 @@
+@import "../../less/abstract/_variables.less";
+
 .error {
     &__boundary {
-        @apply w-full h-screen flex flex-col items-center justify-center;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        img {
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: @base_color;
+        }
     }
 }

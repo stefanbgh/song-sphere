@@ -1,5 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from "react";
 
+import mini_logo from "../../assets/mini-logo.webp";
+
 import "./ErrorBoundary.less";
 
 interface Props {
@@ -28,8 +30,9 @@ class ErrorBoundary extends Component<Props, State> {
 		if (this.state.hasError) {
 			return (
 				<div className="error__boundary">
+					<img width={100} src={mini_logo} alt="logo" />
 					<h1>Oops.. something went wrong.</h1>
-					<h2>Please, try again later.</h2>
+					<h2>Please, try again later!</h2>
 				</div>
 			);
 		}
