@@ -1,3 +1,4 @@
+import { IResponse } from "./../../ts/interfaces/IResponse";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ISong } from "../../ts/models/ISong";
 import { songsAPI } from "../api/songs.api";
@@ -19,8 +20,8 @@ export const songsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addMatcher(
 			songsAPI.endpoints.getSongs.matchFulfilled,
-			(state, action: PayloadAction<ISong[]>) => {
-				state.songs = action.payload;
+			(state, action: PayloadAction<IResponse<ISong[]>>) => {
+				state.songs = action.payload.data;
 			}
 		);
 	},

@@ -4,7 +4,6 @@ const getSongs = async (req, res) => {
 	try {
 		const getSongs = await Song.findAll({
 			order: [["sng_popularity", "DESC"]],
-			limit: 12,
 		});
 
 		if (getSongs.length < 1) {
