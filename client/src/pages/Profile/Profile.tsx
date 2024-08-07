@@ -8,7 +8,7 @@ import { RootState } from "../../ts/types/RootState";
 
 import { useYourActivityQuery } from "../../features/api/users.api";
 import { sbAuth } from "../../constants/sbAuth.constant";
-import { DeleteModal } from "../../components";
+import { DeleteModal, UpdateModal } from "../../components";
 
 import "./Profile.less";
 
@@ -16,7 +16,8 @@ const Profile: FC = (): JSX.Element | null => {
 	const token = localStorage.getItem(sbAuth) as string;
 	const { user: userData } = JSON.parse(token);
 
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+	const [isOpenUpdateModal, setIsOpenUpdateModal] = useState<boolean>(false);
 
 	const { user, yourActivity } = useAppSelector(
 		(state: RootState) => state.users
@@ -24,7 +25,8 @@ const Profile: FC = (): JSX.Element | null => {
 
 	useYourActivityQuery(userData.id);
 
-	const handleOpen = () => setIsOpen(true);
+	const handleOpenUpdateModal = () => setIsOpenUpdateModal(true);
+	const handleOpenDeleteModal = () => setIsOpenDeleteModal(true);
 
 	return (
 		<div className="profile">
@@ -65,14 +67,28 @@ const Profile: FC = (): JSX.Element | null => {
 					<h3>Options:</h3>
 				</div>
 				<div className="options-buttons">
-					<button className="options-btn">Edit profile</button>
-					<button className="options-btn" onClick={handleOpen}>
+					<button
+						className="options-btn"
+						onClick={handleOpenUpdateModal}
+					>
+						Edit profile
+					</button>
+					<button
+						className="options-btn"
+						onClick={handleOpenDeleteModal}
+					>
 						Delete profile
 					</button>
 				</div>
 			</div>
-			{isOpen && (
-				<DeleteModal setIsOpen={setIsOpen} token={userData.id} />
+			{isOpenDeleteModal && (
+				<DeleteModal
+					setIsOpen={setIsOpenDeleteModal}
+					token={userData.id}
+				/>
+			)}
+			{isOpenUpdateModal && (
+				<UpdateModal setIsOpen={setIsOpenUpdateModal} />
 			)}
 		</div>
 	);

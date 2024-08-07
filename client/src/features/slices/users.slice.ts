@@ -28,6 +28,18 @@ export const usersSlice = createSlice({
 				usr_password,
 			};
 		},
+		UPDATE_USER_INFO: (
+			state,
+			action: PayloadAction<{ usr_fullname: string; usr_email: string }>
+		) => {
+			const { usr_fullname, usr_email } = action.payload;
+
+			state.user = {
+				...(state.user as IUser),
+				usr_fullname,
+				usr_email,
+			};
+		},
 		REMOVE_USER_INFO: (state) => {
 			state.user = null;
 		},
@@ -42,4 +54,5 @@ export const usersSlice = createSlice({
 	},
 });
 
-export const { CREATE_USER_INFO, REMOVE_USER_INFO } = usersSlice.actions;
+export const { CREATE_USER_INFO, UPDATE_USER_INFO, REMOVE_USER_INFO } =
+	usersSlice.actions;

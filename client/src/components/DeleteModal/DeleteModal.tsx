@@ -23,9 +23,7 @@ const DeleteModal: FC<IProps> = ({ setIsOpen, token }): JSX.Element => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const handleClose = () => {
-		setIsOpen(false);
-	};
+	const handleClose = () => setIsOpen(false);
 
 	const handleDelete = async (token: string) => {
 		const { error } = await sb.auth.admin.deleteUser(token);
