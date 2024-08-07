@@ -22,7 +22,7 @@ const Song = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		sng_artist: {
+		sng_art_id: {
 			type: DataTypes.INTEGER,
 		},
 		sng_popularity: {

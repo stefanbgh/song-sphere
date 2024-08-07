@@ -18,7 +18,19 @@ const Artist = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		art_info: {
+		art_fullname: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		art_birth: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		art_place: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		art_career: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},

@@ -37,6 +37,7 @@ const Artists: FC = (): JSX.Element => {
 										<div className="image">
 											<img
 												width={175}
+												height={175}
 												src={art_image}
 												alt="artist"
 											/>
