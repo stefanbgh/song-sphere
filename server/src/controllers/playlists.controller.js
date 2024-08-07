@@ -26,7 +26,7 @@ const geyPlaylist = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			playlist,
+			data: playlist,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -50,7 +50,7 @@ const getOurPlaylist = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			playlistSongs,
+			data: playlistSongs,
 		});
 	} catch (error) {
 		return res.status(500).send({

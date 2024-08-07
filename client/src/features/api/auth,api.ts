@@ -1,17 +1,13 @@
 import { ILoginDTO } from "../../ts/dto/ILoginDTO";
 import { IUserDTO } from "../../ts/dto/IUserDTO";
+import { IResponse } from "../../ts/interfaces/IResponse";
 import { Provider } from "../../ts/types/Provider";
 
 import rootAPI from "./root.api";
 
-interface IResponse {
-	msg: string;
-	data: [] | string;
-}
-
 export const authAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		postRegister: builder.mutation<IResponse, IUserDTO>({
+		postRegister: builder.mutation<IResponse<[] | string>, IUserDTO>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/auth/register",
@@ -19,7 +15,7 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		postLogin: builder.mutation<IResponse, ILoginDTO>({
+		postLogin: builder.mutation<IResponse<[] | string>, ILoginDTO>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/auth/login",
@@ -27,7 +23,10 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		postGoogleLogin: builder.mutation<IResponse, { provider: Provider }>({
+		postGoogleLogin: builder.mutation<
+			IResponse<[] | string>,
+			{ provider: Provider }
+		>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/auth/google-login",
@@ -35,7 +34,10 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		postForgotPassword: builder.mutation<IResponse, { usr_email: string }>({
+		postForgotPassword: builder.mutation<
+			IResponse<[] | string>,
+			{ usr_email: string }
+		>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/auth/forgot-password",
@@ -44,7 +46,7 @@ export const authAPI = rootAPI.injectEndpoints({
 			invalidatesTags: ["auth"],
 		}),
 		postResetPassword: builder.mutation<
-			IResponse,
+			IResponse<[] | string>,
 			{ usr_password: string }
 		>({
 			query: (dto) => ({
@@ -54,7 +56,10 @@ export const authAPI = rootAPI.injectEndpoints({
 			}),
 			invalidatesTags: ["auth"],
 		}),
-		postLogout: builder.mutation<IResponse, { usr_id: number }>({
+		postLogout: builder.mutation<
+			IResponse<[] | string>,
+			{ usr_id: number }
+		>({
 			query: (dto) => ({
 				method: "POST",
 				url: "/api/v1/auth/logout",

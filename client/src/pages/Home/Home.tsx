@@ -16,8 +16,8 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import { useGetDataQuery } from "../../features/api/home.api";
 
 import { Spinner } from "../../components";
-import { IArtist } from "../../ts/interfaces/IArtist";
-import { ISong } from "../../ts/interfaces/ISong";
+import { IArtist } from "../../ts/models/IArtist";
+import { ISong } from "../../ts/models/ISong";
 import { sbAuth } from "../../constants/sbAuth.constant";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { TOGGLE_POPUP } from "../../features/slices/popup.slice";

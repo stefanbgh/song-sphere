@@ -12,7 +12,7 @@ const getArtists = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			artists: getArtists,
+			data: getArtists,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -37,7 +37,7 @@ const getSingleArtist = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			artist: getSingleArtist,
+			data: getSingleArtist,
 		});
 	} catch (error) {
 		return res.status(500).send({

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { playlistsAPI } from "./../api/playlists.api";
-import { IPlaylist } from "./../../ts/interfaces/IPlaylist";
+import { IPlaylist } from "../../ts/models/IPlaylist";
 
 interface InitialState {
 	playlist: IPlaylist[] | null;

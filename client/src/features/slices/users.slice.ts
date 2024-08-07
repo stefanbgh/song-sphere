@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IUser } from "../../ts/interfaces/IUser";
+import { IUser } from "../../ts/models/IUser";
 import { usersAPI } from "../api/users.api";
 import { IYourActivity } from "../../ts/interfaces/IYourActivity";
 

@@ -15,7 +15,7 @@ const getSongs = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			songs: getSongs,
+			data: getSongs,
 		});
 	} catch (error) {
 		return res.status(500).send({
@@ -40,7 +40,7 @@ const getSingleSong = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			song: getSingleSong,
+			data: getSingleSong,
 		});
 	} catch (error) {
 		return res.status(500).send({

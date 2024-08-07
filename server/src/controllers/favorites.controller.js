@@ -26,7 +26,7 @@ const getFavorite = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			favorite,
+			data: favorite,
 		});
 	} catch (error) {
 		return res.status(500).send({

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ISong } from "../../ts/interfaces/ISong";
+import { ISong } from "../../ts/models/ISong";
 import { songsAPI } from "../api/songs.api";
 
 interface InitialState {

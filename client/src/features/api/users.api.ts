@@ -1,5 +1,5 @@
 import { IUserDTO } from "../../ts/dto/IUserDTO";
-import { IUser } from "../../ts/interfaces/IUser";
+import { IUser } from "../../ts/models/IUser";
 import { IYourActivity } from "../../ts/interfaces/IYourActivity";
 
 import rootAPI from "./root.api";

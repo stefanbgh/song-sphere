@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IFavorite } from "../../ts/interfaces/IFavorite";
+import { IFavorite } from "../../ts/models/IFavorite";
 import { favoritesAPI } from "../api/favorites.api";
 
 interface InitialState {

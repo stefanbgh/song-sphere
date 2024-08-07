@@ -1,4 +1,5 @@
-import { IFavorite } from "./../../ts/interfaces/IFavorite";
+import { IResponse } from "./../../ts/interfaces/IResponse";
+import { IFavorite } from "../../ts/models/IFavorite";
 import rootAPI from "./root.api";
 
 interface IAddFavoriteDTO {
@@ -8,7 +9,7 @@ interface IAddFavoriteDTO {
 
 export const favoritesAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		getFavorites: builder.query<IFavorite[], void>({
+		getFavorites: builder.query<IResponse<IFavorite[]>, void>({
 			query: () => "/api/v1/favorites",
 			providesTags: ["favorites"],
 		}),

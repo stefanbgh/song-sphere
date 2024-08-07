@@ -18,7 +18,7 @@ const getSingleUser = async (req, res) => {
 
 		return res.send({
 			msg: "success",
-			user: getSingleUser,
+			data: getSingleUser,
 		});
 	} catch (error) {
 		return res.status(500).send({

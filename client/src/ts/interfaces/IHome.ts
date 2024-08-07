@@ -1,5 +1,5 @@
-import { IArtist } from "./IArtist";
-import { ISong } from "./ISong";
+import { IArtist } from "../models/IArtist";
+import { ISong } from "../models/ISong";
 
 export interface IHome {
 	msg: string;
