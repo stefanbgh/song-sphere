@@ -1,11 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IArtist } from "../../ts/models/IArtist";
 import { artistsAPI } from "../api/artists.api";
-
-interface IResponse {
-	msg: string;
-	artists: IArtist[];
-}
+import { IResponse } from "../../ts/interfaces/IResponse";
 
 interface InitialState {
 	artists: IArtist[] | null;
@@ -24,10 +20,8 @@ export const artistsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addMatcher(
 			artistsAPI.endpoints.getArtists.matchFulfilled,
-			(state, action: PayloadAction<IArtist[]>) => {
-				const {} = action.payload;
-
-				state.artists = action.payload;
+			(state, action: PayloadAction<IResponse<IArtist[]>>) => {
+				state.artists = action.payload.data;
 			}
 		);
 	},
