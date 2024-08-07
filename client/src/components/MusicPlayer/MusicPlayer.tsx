@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect, useContext, Context } from "react";
+import { FC, useState, useRef, useEffect } from "react";
 
 import {
 	IoPlayBackCircle,
@@ -11,25 +11,31 @@ import { FaRandom } from "react-icons/fa";
 import { FaRepeat } from "react-icons/fa6";
 import { MdOutlineLyrics } from "react-icons/md";
 
-import disc from "../../assets/disc.webp";
-import SongContext from "../../context/SongContext";
-import { ISongContext } from "../../ts/interfaces/ISongContext";
-
-import "./MusicPlayer.less";
 import { NavLink } from "react-router-dom";
 import AppRoutes from "../../router/Routes";
+import { RANDOM_SONG, STOP_SONG } from "../../features/slices/songs.slice";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { RootState } from "../../ts/types/RootState";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useGetSongsQuery } from "../../features/api/songs.api";
+
+import disc from "../../assets/disc.webp";
+
+import "./MusicPlayer.less";
 
 const MusicPlayer: FC = () => {
-	const { isActive, setIsActive } = useContext(
-		SongContext as Context<ISongContext>
-	);
+	useGetSongsQuery();
+	const { activeSong } = useAppSelector((state: RootState) => state.songs);
 
 	const [isPlay, setIsPlay] = useState<boolean>(false);
 	const [isRaR, setIsRaR] = useState<null | "random" | "repeat">(null);
 	const [currentTime, setCurrentTime] = useState<number>(0);
 	const [duration, setDuration] = useState<number>(0);
+
 	const audioRef = useRef<HTMLAudioElement>(null);
 	const discRef = useRef<HTMLImageElement>(null);
+
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		const audio = audioRef.current;
@@ -46,7 +52,7 @@ const MusicPlayer: FC = () => {
 	}, [isRaR]);
 
 	useEffect(() => {
-		if (isActive) {
+		if (activeSong) {
 			discRef.current?.classList.add("rotate");
 			audioRef.current?.play();
 			setIsPlay(true);
@@ -55,7 +61,7 @@ const MusicPlayer: FC = () => {
 			audioRef.current?.pause();
 			setIsPlay(false);
 		}
-	}, [isActive]);
+	}, [activeSong]);
 
 	const handleClick = () => {
 		if (isPlay) {
@@ -70,7 +76,7 @@ const MusicPlayer: FC = () => {
 	};
 
 	const handleClose = () => {
-		setIsActive(false);
+		dispatch(STOP_SONG());
 	};
 
 	const handleTimeUpdate = () => {
@@ -107,8 +113,17 @@ const MusicPlayer: FC = () => {
 	};
 
 	const handleEnded = () => {
-		if (isRaR !== null) {
+		if (isRaR === "repeat") {
 			setCurrentTime(0);
+			audioRef.current?.play();
+
+			return;
+		}
+
+		if (isRaR === "random") {
+			setCurrentTime(0);
+			dispatch(RANDOM_SONG());
+			audioRef.current?.load();
 			audioRef.current?.play();
 
 			return;
@@ -129,13 +144,10 @@ const MusicPlayer: FC = () => {
 		<div className="player">
 			<div className="left">
 				<img ref={discRef} width={75} src={disc} alt="disc" />
-				<p>Adele – Set Fire to the Rain</p>
+				<p>{activeSong!.sng_title}</p>
 			</div>
 			<div className="mid">
-				<audio
-					ref={audioRef}
-					src="https://uklnvbfhflzvuntfjajg.supabase.co/storage/v1/object/public/songs/Adele/Set_Fire_to_the_Rain.mp3"
-				/>
+				<audio ref={audioRef} src={activeSong!.sng_path} />
 				<div>
 					<IoPlayBackCircle size={40} className="icon" />
 				</div>
@@ -184,7 +196,7 @@ const MusicPlayer: FC = () => {
 				</div>
 				<div>
 					<NavLink
-						to={`${AppRoutes.SONGS}/1`}
+						to={`${AppRoutes.SONGS}/${activeSong?.sng_id}`}
 						className={({ isActive }) =>
 							isActive ? "lyric active" : "lyric"
 						}

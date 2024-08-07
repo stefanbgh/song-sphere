@@ -1,9 +1,6 @@
-import { Context, FC, ReactNode, useContext } from "react";
+import { FC, ReactNode } from "react";
 
 import { Footer, MusicPlayer, PopUp, Sidebar, Navbar } from "../components";
-
-import SongContext from "../context/SongContext";
-import { ISongContext } from "../ts/interfaces/ISongContext";
 
 import { RootState } from "../ts/types/RootState";
 import { useAppSelector } from "../hooks/useAppSelector";
@@ -17,7 +14,7 @@ interface IProps {
 const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
 	const { popup } = useAppSelector((state: RootState) => state.popup);
 
-	const { isActive } = useContext(SongContext as Context<ISongContext>);
+	const { activeSong } = useAppSelector((state: RootState) => state.songs);
 
 	return (
 		<>
@@ -29,7 +26,7 @@ const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
 					<Footer />
 				</div>
 			</div>
-			{isActive && <MusicPlayer />}
+			{activeSong && <MusicPlayer />}
 			{popup && <PopUp />}
 		</>
 	);

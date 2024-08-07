@@ -1,4 +1,4 @@
-import { Context, FC, useContext } from "react";
+import { FC } from "react";
 
 import AppRoutes from "../../router/Routes";
 import {
@@ -8,8 +8,6 @@ import {
 	CiViewList,
 } from "react-icons/ci";
 
-import SongContext from "../../context/SongContext";
-import { ISongContext } from "../../ts/interfaces/ISongContext";
 import ProtectedNavLink from "../../hoc/ProtectNavLink";
 import { RootState } from "../../ts/types/RootState";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -23,6 +21,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { TOGGLE_POPUP } from "../../features/slices/popup.slice";
 
 import "./Home.less";
+import { PLAY_SONG } from "../../features/slices/songs.slice";
 
 const Home: FC = (): JSX.Element => {
 	useGetDataQuery();
@@ -30,16 +29,15 @@ const Home: FC = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const auth = localStorage.getItem(sbAuth);
-	const { setIsActive } = useContext(SongContext as Context<ISongContext>);
 
-	const handlePlay = () => {
+	const handlePlay = (song: ISong) => {
 		if (!auth) {
 			dispatch(TOGGLE_POPUP(true));
 
 			return;
 		}
 
-		setIsActive(true);
+		dispatch(PLAY_SONG(song));
 	};
 
 	return (
@@ -91,7 +89,7 @@ const Home: FC = (): JSX.Element => {
 								return (
 									<div
 										className="card"
-										onClick={handlePlay}
+										onClick={() => handlePlay(song)}
 										key={sng_id}
 									>
 										<div>

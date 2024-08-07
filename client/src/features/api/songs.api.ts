@@ -8,7 +8,7 @@ export const songsAPI = rootAPI.injectEndpoints({
 			query: () => "/api/v1/songs",
 			providesTags: ["songs"],
 		}),
-		getSingleSong: builder.query<IResponse<ISong>, void>({
+		getSingleSong: builder.query<IResponse<ISong>, string>({
 			query: (sng_id) => `/api/v1/songs/${sng_id}`,
 			providesTags: ["song"],
 		}),

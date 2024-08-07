@@ -54,6 +54,31 @@
             }
         }
     }
+
+    &-btn {
+        display: flex;
+        align-items: center;
+        padding-top: 2rem;
+
+        &__view {
+            &-more {
+                display: inline-block;
+                padding: .75rem 1.5rem;
+                font-size: 1rem;
+                font-weight: bold;
+                color: @primary_color;
+                background: @base_color;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: .3s;
+
+                &:hover {
+                    background-color: @base_color_hover;
+                }
+            }
+        }
+    }
 }
 
 @keyframes shake {

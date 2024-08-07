@@ -1,29 +1,31 @@
-import { Context, FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 
 import { CiMusicNote1 } from "react-icons/ci";
 
-import SongContext from "../../context/SongContext";
-import { ISongContext } from "../../ts/interfaces/ISongContext";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { RootState } from "../../ts/types/RootState";
 import { Spinner } from "../../components";
 import { ISong } from "../../ts/models/ISong";
 import { useGetSongsQuery } from "../../features/api/songs.api";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { PLAY_SONG } from "../../features/slices/songs.slice";
 
 import "./Songs.less";
 
 const Songs: FC = (): JSX.Element => {
 	useGetSongsQuery();
-	const { setIsActive } = useContext(SongContext as Context<ISongContext>);
 	const { songs } = useAppSelector((state: RootState) => state.songs);
 
 	const [showSongs, setShowSongs] = useState<number>(10);
+	const dispatch = useAppDispatch();
 
 	const handleViewMore = () => {
 		setShowSongs((showSongs) => showSongs + 10);
 	};
 
-	const handlePlay = () => setIsActive(true);
+	const handlePlay = (song: ISong) => {
+		dispatch(PLAY_SONG(song));
+	};
 
 	return (
 		<section className="songs">
@@ -41,7 +43,7 @@ const Songs: FC = (): JSX.Element => {
 							return (
 								<div
 									className="card"
-									onClick={handlePlay}
+									onClick={() => handlePlay(song)}
 									key={sng_id}
 								>
 									<div>
@@ -59,9 +61,16 @@ const Songs: FC = (): JSX.Element => {
 					)}
 				</div>
 			</div>
-			{songs && songs.length !== showSongs && (
-				<button onClick={handleViewMore}>View more</button>
-			)}
+			<div className="songs-btn">
+				{songs && songs.length !== showSongs && (
+					<button
+						className="songs-btn__view-more"
+						onClick={handleViewMore}
+					>
+						View more
+					</button>
+				)}
+			</div>
 		</section>
 	);
 };
