@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { MdInfoOutline, MdInsertChartOutlined } from "react-icons/md";
 import { IoMdOptions } from "react-icons/io";
@@ -8,18 +8,23 @@ import { RootState } from "../../ts/types/RootState";
 
 import { useYourActivityQuery } from "../../features/api/users.api";
 import { sbAuth } from "../../constants/sbAuth.constant";
+import { DeleteModal } from "../../components";
 
 import "./Profile.less";
 
 const Profile: FC = (): JSX.Element | null => {
-	const token = localStorage.getItem(sbAuth);
-	const { user: userData } = JSON.parse(token!);
+	const token = localStorage.getItem(sbAuth) as string;
+	const { user: userData } = JSON.parse(token);
+
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const { user, yourActivity } = useAppSelector(
 		(state: RootState) => state.users
 	);
 
 	useYourActivityQuery(userData.id);
+
+	const handleOpen = () => setIsOpen(true);
 
 	return (
 		<div className="profile">
@@ -61,9 +66,14 @@ const Profile: FC = (): JSX.Element | null => {
 				</div>
 				<div className="options-buttons">
 					<button className="options-btn">Edit profile</button>
-					<button className="options-btn">Delete profile</button>
+					<button className="options-btn" onClick={handleOpen}>
+						Delete profile
+					</button>
 				</div>
 			</div>
+			{isOpen && (
+				<DeleteModal setIsOpen={setIsOpen} token={userData.id} />
+			)}
 		</div>
 	);
 };
