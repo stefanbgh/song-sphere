@@ -41,7 +41,7 @@ const Navbar: FC = (): JSX.Element => {
 
 		const timer = setTimeout(() => {
 			checkToken();
-		}, 500);
+		}, 1000);
 
 		return () => {
 			setIsLoading(true);
