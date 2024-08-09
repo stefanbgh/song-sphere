@@ -10,9 +10,10 @@ const geyPlaylist = async (req, res) => {
 			attributes: ["ply_sng_id"],
 		});
 
-		if (playlistSongs < 1) {
-			return res.status(401).send({
-				err: "The playlist was not found",
+		if (playlistSongs.length < 1) {
+			return res.send({
+				msg: "success",
+				data: [],
 			});
 		}
 

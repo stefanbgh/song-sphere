@@ -1,7 +1,7 @@
-import { FC, Fragment, useState } from "react";
+import { FC, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { CiPlay1, CiHeart, CiBookmark } from "react-icons/ci";
+import { CiPlay1, CiBookmark } from "react-icons/ci";
 import { FaStopCircle } from "react-icons/fa";
 
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -9,13 +9,15 @@ import { RootState } from "../../ts/types/RootState";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { PLAY_SONG, STOP_SONG } from "../../features/slices/songs.slice";
 import { ISong } from "../../ts/models/ISong";
+import { useGetSingleSongQuery } from "../../features/api/songs.api";
+import { FavoriteIcon, Spinner } from "../../components";
+import { formatText } from "../../utils/formatText";
 
 import "./Song.less";
-import { useGetSingleSongQuery } from "../../features/api/songs.api";
-import { Spinner } from "../../components";
 
 const Song: FC = () => {
 	const { id } = useParams();
+
 	useGetSingleSongQuery(id as string);
 
 	const { activeSong, song } = useAppSelector(
@@ -24,7 +26,6 @@ const Song: FC = () => {
 
 	const dispatch = useAppDispatch();
 
-	const [isFav, setIsFav] = useState<boolean>(false);
 	const [isList, setIsList] = useState<boolean>(false);
 
 	const handlePlay = (song: ISong) => {
@@ -37,27 +38,11 @@ const Song: FC = () => {
 		dispatch(PLAY_SONG(song));
 	};
 
-	const formatText = (txt: string) => {
-		return txt.split(/(\[.*?\])/).map((part, index) => {
-			if (part.match(/\[.*?\]/)) {
-				return (
-					<Fragment key={index}>
-						<br />
-						<br />
-						<span className="verse">{part}</span>
-						<br />
-					</Fragment>
-				);
-			}
-			return part;
-		});
-	};
-
 	return (
 		<section className="song">
 			<h1 className="section-title">Song</h1>
 			<p className="section-desc">
-				Here you can find more information about the individual artist.
+				Here you can find more information about the individual song.
 			</p>
 			{song ? (
 				<div className="song-info">
@@ -81,11 +66,7 @@ const Song: FC = () => {
 									onClick={() => handlePlay(song)}
 								/>
 							)}
-							<CiHeart
-								size={24}
-								className={isFav ? "icon active" : "icon"}
-								onClick={() => setIsFav((iff) => !iff)}
-							/>
+							<FavoriteIcon id={id as string} />
 							<CiBookmark
 								size={22}
 								className={isList ? "icon active" : "icon"}

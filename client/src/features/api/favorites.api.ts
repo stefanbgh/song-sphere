@@ -1,16 +1,16 @@
 import { IResponse } from "./../../ts/interfaces/IResponse";
-import { IFavorite } from "../../ts/models/IFavorite";
 import rootAPI from "./root.api";
+import { ISong } from "../../ts/models/ISong";
 
 interface IAddFavoriteDTO {
 	sng_id: number;
-	usr_id: number;
+	usr_id: string;
 }
 
 export const favoritesAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		getFavorites: builder.query<IResponse<IFavorite[]>, void>({
-			query: () => "/api/v1/favorites",
+		getFavorites: builder.query<IResponse<ISong[]>, string>({
+			query: (usr_id) => `/api/v1/favorites/${usr_id}`,
 			providesTags: ["favorites"],
 		}),
 		addFavorite: builder.mutation<{ msg: string }, IAddFavoriteDTO>({
@@ -22,9 +22,9 @@ export const favoritesAPI = rootAPI.injectEndpoints({
 			invalidatesTags: ["favorites"],
 		}),
 		deleteFavorite: builder.mutation<{ msg: string }, number>({
-			query: (fav_id) => ({
+			query: (sng_id) => ({
 				method: "DELETE",
-				url: `/api/v1/favorites/${fav_id}`,
+				url: `/api/v1/favorites/${sng_id}`,
 			}),
 			invalidatesTags: ["favorites"],
 		}),

@@ -1,18 +1,21 @@
-import Favorite from "../models/Playlist.js";
+import Favorite from "../models/Favorite.js";
 import Song from "../models/Song.js";
 
 const getFavorite = async (req, res) => {
+	const usr_id = req.params.id;
+
 	try {
 		const favoriteSongs = await Favorite.findAll({
 			where: {
-				fav_usr_id: 1,
+				fav_usr_id: usr_id,
 			},
 			attributes: ["fav_sng_id"],
 		});
 
-		if (favoriteSongs < 1) {
-			return res.status(401).send({
-				err: "The favorite was not found",
+		if (favoriteSongs.length < 1) {
+			return res.send({
+				msg: "success",
+				data: [],
 			});
 		}
 
@@ -55,9 +58,11 @@ const addFavorite = async (req, res) => {
 };
 
 const deleteFavorite = async (req, res) => {
-	const fav_id = req.params.id;
+	const sng_id = req.params.id;
 
-	const result = await Favorite.destroy({ where: { fav_id } });
+	const result = await Favorite.destroy({
+		where: { fav_sng_id: sng_id },
+	});
 
 	if (result === 0) {
 		return res.status(404).send({
