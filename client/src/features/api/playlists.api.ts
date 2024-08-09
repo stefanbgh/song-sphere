@@ -1,6 +1,6 @@
 import { IResponse } from "./../../ts/interfaces/IResponse";
-import { IPlaylist } from "../../ts/models/IPlaylist";
 import rootAPI from "./root.api";
+import { ISong } from "../../ts/models/ISong";
 
 interface IAddPlaylistDTO {
 	sng_id: number;
@@ -9,11 +9,11 @@ interface IAddPlaylistDTO {
 
 export const playlistsAPI = rootAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		getPlaylist: builder.query<IResponse<IPlaylist[]>, void>({
+		getPlaylist: builder.query<IResponse<ISong[]>, void>({
 			query: () => "/api/v1/playlists/my-playlist",
 			providesTags: ["playlists"],
 		}),
-		getOurPlaylist: builder.query<IResponse<IPlaylist[]>, void>({
+		getOurPlaylist: builder.query<IResponse<ISong[]>, void>({
 			query: () => "/api/v1/playlists/our-playlist",
 			providesTags: ["our-playlist"],
 		}),

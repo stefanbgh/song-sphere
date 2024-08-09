@@ -39,13 +39,14 @@ const geyPlaylist = async (req, res) => {
 const getOurPlaylist = async (req, res) => {
 	try {
 		const playlistSongs = await Song.findAll({
-			order: [["art_popularity", "ASC"]],
-			limit: 9,
+			order: [["sng_popularity", "ASC"]],
+			limit: 8,
 		});
 
-		if (playlistSongs < 1) {
-			return res.status(401).send({
-				err: "The playlist was not found",
+		if (playlistSongs.length < 1) {
+			return res.send({
+				msg: success,
+				data: [],
 			});
 		}
 

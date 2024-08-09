@@ -1,10 +1,11 @@
+import { IResponse } from "./../../ts/interfaces/IResponse";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { playlistsAPI } from "./../api/playlists.api";
-import { IPlaylist } from "../../ts/models/IPlaylist";
+import { ISong } from "../../ts/models/ISong";
 
 interface InitialState {
-	playlist: IPlaylist[] | null;
-	ourPlaylist: IPlaylist[] | null;
+	playlist: ISong[] | null;
+	ourPlaylist: ISong[] | null;
 }
 
 const initialState: InitialState = {
@@ -19,14 +20,14 @@ export const playlistsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addMatcher(
 			playlistsAPI.endpoints.getPlaylist.matchFulfilled,
-			(state, action: PayloadAction<IPlaylist[]>) => {
-				state.playlist = action.payload;
+			(state, action: PayloadAction<IResponse<ISong[]>>) => {
+				state.playlist = action.payload.data;
 			}
 		);
 		builder.addMatcher(
 			playlistsAPI.endpoints.getOurPlaylist.matchFulfilled,
-			(state, action: PayloadAction<IPlaylist[]>) => {
-				state.ourPlaylist = action.payload;
+			(state, action: PayloadAction<IResponse<ISong[]>>) => {
+				state.ourPlaylist = action.payload.data;
 			}
 		);
 	},

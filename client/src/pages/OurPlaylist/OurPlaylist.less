@@ -3,7 +3,7 @@
 .our-playlist {
     height: 72.5vh;
 
-    &_title {
+    &__title {
         margin-bottom: 2rem;
 
         h2 {
@@ -15,7 +15,9 @@
         }
     }
 
-    .songs {
+    &__songs {
+        width: 75%;
+
         .song {
             border-bottom: 1px solid white;
             display: flex;
@@ -23,10 +25,45 @@
             gap: 1.5rem;
             padding: 1.25rem;
 
-            .time {
+            &-num,
+            &-stats {
+                .icon {
+                    color: @base_color;
+                }
+            }
+
+            &-num {
+                width: 5%;
+                display: flex;
+                align-items: center;
+            }
+
+            &-title {
+                width: 52.5%;
+                font-style: italic;
+            }
+
+            &-stats {
                 display: flex;
                 align-items: center;
                 gap: .25rem;
+                width: 15%;
+            }
+
+            &-options {
+                display: flex;
+                gap: .25rem;
+                width: 2.5%;
+
+                &__icon {
+                    cursor: pointer;
+                    transition: .3s;
+
+                    &:hover {
+                        color: @base_color;
+                        transition: .3s;
+                    }
+                }
             }
         }
     }
