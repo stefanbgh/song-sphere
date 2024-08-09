@@ -58,10 +58,12 @@ const addFavorite = async (req, res) => {
 };
 
 const deleteFavorite = async (req, res) => {
-	const sng_id = req.params.id;
+	const { sng_id, usr_id: fav_usr_id } = req.query;
+
+	const fav_sng_id = parseInt(sng_id);
 
 	const result = await Favorite.destroy({
-		where: { fav_sng_id: sng_id },
+		where: { fav_sng_id, fav_usr_id },
 	});
 
 	if (result === 0) {

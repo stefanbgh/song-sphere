@@ -2,10 +2,12 @@ import Playlist from "../models/Playlist.js";
 import Song from "../models/Song.js";
 
 const geyPlaylist = async (req, res) => {
+	const usr_id = req.params.id;
+
 	try {
 		const playlistSongs = await Playlist.findAll({
 			where: {
-				ply_usr_id: 1,
+				ply_usr_id: usr_id,
 			},
 			attributes: ["ply_sng_id"],
 		});
@@ -81,9 +83,13 @@ const addPlaylist = async (req, res) => {
 };
 
 const deletePlaylist = async (req, res) => {
-	const ply_id = req.params.id;
+	const { sng_id, usr_id: ply_usr_id } = req.query;
 
-	const result = await Playlist.destroy({ where: { ply_id } });
+	const ply_sng_id = parseInt(sng_id);
+
+	const result = await Playlist.destroy({
+		where: { ply_sng_id, ply_usr_id },
+	});
 
 	if (result === 0) {
 		return res.status(404).send({

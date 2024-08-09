@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/our-playlist", getOurPlaylist);
-router.get("/my-playlist", geyPlaylist);
+router.get("/my-playlist/:id", geyPlaylist);
 router.post("/my-playlist", addPlaylist);
 router.delete("/my-playlist/:id", deletePlaylist);
 

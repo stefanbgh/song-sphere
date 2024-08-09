@@ -44,7 +44,7 @@ const FavoriteIcon: FC<IProps> = ({ id }): JSX.Element => {
 		const sng_id = Number(id);
 
 		if (exists) {
-			deleteFavorite(Number(sng_id));
+			deleteFavorite({ sng_id, usr_id });
 
 			return;
 		}

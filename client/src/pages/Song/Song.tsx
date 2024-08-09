@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { CiPlay1, CiBookmark } from "react-icons/ci";
+import { CiPlay1 } from "react-icons/ci";
 import { FaStopCircle } from "react-icons/fa";
 
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -10,7 +10,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { PLAY_SONG, STOP_SONG } from "../../features/slices/songs.slice";
 import { ISong } from "../../ts/models/ISong";
 import { useGetSingleSongQuery } from "../../features/api/songs.api";
-import { FavoriteIcon, Spinner } from "../../components";
+import { FavoriteIcon, PlaylistIcon, Spinner } from "../../components";
 import { formatText } from "../../utils/formatText";
 
 import "./Song.less";
@@ -25,8 +25,6 @@ const Song: FC = () => {
 	);
 
 	const dispatch = useAppDispatch();
-
-	const [isList, setIsList] = useState<boolean>(false);
 
 	const handlePlay = (song: ISong) => {
 		if (activeSong) {
@@ -67,11 +65,7 @@ const Song: FC = () => {
 								/>
 							)}
 							<FavoriteIcon id={id as string} />
-							<CiBookmark
-								size={22}
-								className={isList ? "icon active" : "icon"}
-								onClick={() => setIsList((il) => !il)}
-							/>
+							<PlaylistIcon id={id as string} />
 						</div>
 					</div>
 					<div className="song-info_bot">

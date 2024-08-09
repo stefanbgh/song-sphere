@@ -6,17 +6,27 @@ import { ISong } from "../../ts/models/ISong";
 interface InitialState {
 	playlist: ISong[] | null;
 	ourPlaylist: ISong[] | null;
+	exists: boolean;
 }
 
 const initialState: InitialState = {
 	playlist: null,
 	ourPlaylist: null,
+	exists: false,
 };
 
 export const playlistsSlice = createSlice({
 	name: "playlists",
 	initialState,
-	reducers: {},
+	reducers: {
+		CHECK_PLAYLIST_SONG: (state, action: PayloadAction<number>) => {
+			const checkSong = [...(state.playlist as ISong[])].some(
+				(favorite: ISong) => favorite.sng_id === action.payload
+			);
+
+			state.exists = checkSong;
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addMatcher(
 			playlistsAPI.endpoints.getPlaylist.matchFulfilled,
@@ -32,3 +42,5 @@ export const playlistsSlice = createSlice({
 		);
 	},
 });
+
+export const { CHECK_PLAYLIST_SONG } = playlistsSlice.actions;

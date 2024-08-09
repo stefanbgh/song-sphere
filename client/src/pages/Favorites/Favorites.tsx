@@ -48,8 +48,8 @@ const Favorites: FC = () => {
 		dispatch(PLAY_SONG(song));
 	};
 
-	const handleDelete = (sng_id: number) => {
-		deleteFavorite(sng_id);
+	const handleDelete = (sng_id: number, usr_id: string) => {
+		deleteFavorite({ sng_id, usr_id });
 	};
 
 	return (
@@ -101,7 +101,10 @@ const Favorites: FC = () => {
 												size={22}
 												className="song-options__icon"
 												onClick={() =>
-													handleDelete(sng_id)
+													handleDelete(
+														sng_id,
+														userData.id
+													)
 												}
 											/>
 										</div>
