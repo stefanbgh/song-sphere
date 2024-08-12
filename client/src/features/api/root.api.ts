@@ -6,7 +6,7 @@ const rootAPI = createApi({
 	reducerPath: "api",
 	endpoints: () => ({}),
 	baseQuery: fetchBaseQuery({
-		baseUrl: "http://localhost:3500",
+		baseUrl: import.meta.env.VITE_BASE_URL,
 		prepareHeaders: (headers) => {
 			headers.append("Content-Type", "application/json");
 			return headers;

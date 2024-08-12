@@ -1,22 +1,22 @@
 import { FC, ReactNode, useEffect } from "react";
 
-import { Footer, MusicPlayer, PopUp, Sidebar, Navbar } from "../components";
+import { Footer, MusicPlayer, PopUp, Sidebar, Navbar } from "../../components";
 
-import { RootState } from "../ts/types/RootState";
-import { useAppSelector } from "../hooks/useAppSelector";
-import { sbAuth } from "../constants/sbAuth.constant";
-import { useAppDispatch } from "../hooks/useAppDispatch";
-import { TOGGLE_POPUP } from "../features/slices/popup.slice";
+import { RootState } from "../../ts/types/RootState";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { sbAuth } from "../../constants/sbAuth.constant";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { TOGGLE_POPUP } from "../../features/slices/popup.slice";
 import { useLocation, useNavigate } from "react-router-dom";
-import AppRoutes from "../router/Routes";
+import AppRoutes from "../../router/Routes";
 
-import "./Layout.less";
+import "./PrivateLayout.less";
 
 interface IProps {
 	children: ReactNode;
 }
 
-const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
+const PrivateLayout: FC<IProps> = ({ children }): JSX.Element | null => {
 	const token = localStorage.getItem(sbAuth);
 	const { popup } = useAppSelector((state: RootState) => state.popup);
 
@@ -52,4 +52,4 @@ const Layout: FC<IProps> = ({ children }): JSX.Element | null => {
 	);
 };
 
-export default Layout;
+export default PrivateLayout;

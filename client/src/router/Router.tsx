@@ -28,11 +28,10 @@ import {
 	TermsOfUse,
 } from "../pages";
 
-import Layout from "../layout/Layout";
+import { AuthLayout, PrivateLayout, PublicLayout } from "../layouts";
 import AppRoutes from "./Routes";
 
 import { Toaster } from "react-hot-toast";
-import AuthLayout from "../layout/auth/AuthLayout";
 
 const Router: React.FC = (): JSX.Element => {
 	return (
@@ -43,85 +42,117 @@ const Router: React.FC = (): JSX.Element => {
 				<Route
 					path={AppRoutes.HOME}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Home />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.FAVORITES}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Favorites />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.PLAYLIST}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Playlist />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.ARTISTS}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Artists />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={`${AppRoutes.ARTISTS}/:id`}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Artist />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.SONGS}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Songs />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={`${AppRoutes.SONGS}/:id`}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Song />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.OUR_PLAYLIST}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<OurPlaylist />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 				<Route
 					path={AppRoutes.PROFILE}
 					element={
-						<Layout>
+						<PrivateLayout>
 							<Profile />
-						</Layout>
+						</PrivateLayout>
 					}
 				/>
 
 				{/* Info */}
-				<Route path={AppRoutes.ABOUT} element={<About />} />
-				<Route path={AppRoutes.CONTACT} element={<Contact />} />
-				<Route path={AppRoutes.FAQ} element={<Faq />} />
+				<Route
+					path={AppRoutes.ABOUT}
+					element={
+						<PublicLayout>
+							<About />
+						</PublicLayout>
+					}
+				/>
+				<Route
+					path={AppRoutes.CONTACT}
+					element={
+						<PublicLayout>
+							<Contact />
+						</PublicLayout>
+					}
+				/>
+				<Route
+					path={AppRoutes.FAQ}
+					element={
+						<PublicLayout>
+							<Faq />
+						</PublicLayout>
+					}
+				/>
 				<Route
 					path={AppRoutes.PRIVACY_POLICE}
-					element={<PrivacyPolice />}
+					element={
+						<PublicLayout>
+							<PrivacyPolice />
+						</PublicLayout>
+					}
 				/>
-				<Route path={AppRoutes.TERMS_OF_USE} element={<TermsOfUse />} />
+				<Route
+					path={AppRoutes.TERMS_OF_USE}
+					element={
+						<PublicLayout>
+							<TermsOfUse />
+						</PublicLayout>
+					}
+				/>
 
 				{/* Auth */}
 				<Route
