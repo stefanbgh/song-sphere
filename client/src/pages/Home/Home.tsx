@@ -40,6 +40,10 @@ const Home: FC = (): JSX.Element => {
 		dispatch(PLAY_SONG(song));
 	};
 
+	if (home === "error") {
+		throw new Error("Internal server error");
+	}
+
 	return (
 		<>
 			{home ? (

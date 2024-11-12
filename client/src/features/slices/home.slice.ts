@@ -3,7 +3,7 @@ import { IHome } from "../../ts/interfaces/IHome";
 import { homeAPI } from "../api/home.api";
 
 interface InitialState {
-	home: IHome | null;
+	home: IHome | "error" | null;
 }
 
 const initialState: InitialState = {
@@ -18,7 +18,13 @@ export const homeSlice = createSlice({
 		builder.addMatcher(
 			homeAPI.endpoints.getData.matchFulfilled,
 			(state, action: PayloadAction<IHome>) => {
-				state.home = action.payload;
+				if (action.payload.err) {
+					state.home = "error";
+
+					return;
+				}
+
+				state.home = action.payload as IHome;
 			}
 		);
 	},
